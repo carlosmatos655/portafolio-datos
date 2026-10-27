@@ -8,3 +8,5 @@ comercio-exterior-peru/data/raw/
 **/.pbi/cache.abf
 # Esquemas PBIR descargados por validate_pbir.py
 **/.schema-cache/
+# Compras públicas: descargas crudas OCDS (~560 MB, se regeneran desde la fuente)
+compras-publicas-peru/data/raw/
