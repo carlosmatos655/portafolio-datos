@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+# Descargas crudas (se regeneran con etl.py) y base SQLite (se regenera con run_sql.py)
+comercio-exterior-peru/data/raw/
+*.db
+# Power BI: caché local del proyecto
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

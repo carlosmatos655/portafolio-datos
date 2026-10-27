@@ -1,0 +1,98 @@
+capitulo,producto,sector,capitulo_producto
+01,Animales vivos,Agro y alimentos,01 · Animales vivos
+02,Carne,Agro y alimentos,02 · Carne
+03,Pescados y mariscos,Pesca,03 · Pescados y mariscos
+04,"Lácteos, huevos y miel",Agro y alimentos,"04 · Lácteos, huevos y miel"
+05,Otros productos de origen animal,Agro y alimentos,05 · Otros productos de origen animal
+06,Plantas y flores,Agro y alimentos,06 · Plantas y flores
+07,Hortalizas,Agro y alimentos,07 · Hortalizas
+08,Frutas y frutos secos,Agro y alimentos,08 · Frutas y frutos secos
+09,"Café, té y especias",Agro y alimentos,"09 · Café, té y especias"
+10,Cereales,Agro y alimentos,10 · Cereales
+11,Productos de molinería,Agro y alimentos,11 · Productos de molinería
+12,Semillas y frutos oleaginosos,Agro y alimentos,12 · Semillas y frutos oleaginosos
+13,Gomas y resinas vegetales,Agro y alimentos,13 · Gomas y resinas vegetales
+14,Materias trenzables vegetales,Agro y alimentos,14 · Materias trenzables vegetales
+15,Grasas y aceites,Agro y alimentos,15 · Grasas y aceites
+16,Conservas de carne y pescado,Pesca,16 · Conservas de carne y pescado
+17,Azúcares y confitería,Agro y alimentos,17 · Azúcares y confitería
+18,Cacao y sus preparaciones,Agro y alimentos,18 · Cacao y sus preparaciones
+19,Preparaciones de cereales,Agro y alimentos,19 · Preparaciones de cereales
+20,Conservas de hortalizas y frutas,Agro y alimentos,20 · Conservas de hortalizas y frutas
+21,Preparaciones alimenticias diversas,Agro y alimentos,21 · Preparaciones alimenticias diversas
+22,Bebidas,Agro y alimentos,22 · Bebidas
+23,Harina de pescado y alimento animal,Pesca,23 · Harina de pescado y alimento animal
+24,Tabaco,Agro y alimentos,24 · Tabaco
+25,"Sal, azufre, piedras y cemento",Minería y metales,"25 · Sal, azufre, piedras y cemento"
+26,Minerales metalíferos,Minería y metales,26 · Minerales metalíferos
+27,Combustibles y aceites minerales,Hidrocarburos,27 · Combustibles y aceites minerales
+28,Productos químicos inorgánicos,Químicos y plásticos,28 · Productos químicos inorgánicos
+29,Productos químicos orgánicos,Químicos y plásticos,29 · Productos químicos orgánicos
+30,Productos farmacéuticos,Químicos y plásticos,30 · Productos farmacéuticos
+31,Abonos,Químicos y plásticos,31 · Abonos
+32,"Tintes, pinturas y tintas",Químicos y plásticos,"32 · Tintes, pinturas y tintas"
+33,Aceites esenciales y cosméticos,Químicos y plásticos,33 · Aceites esenciales y cosméticos
+34,Jabones y ceras,Químicos y plásticos,34 · Jabones y ceras
+35,Materias albuminoideas y colas,Químicos y plásticos,35 · Materias albuminoideas y colas
+36,Explosivos,Químicos y plásticos,36 · Explosivos
+37,Productos fotográficos,Químicos y plásticos,37 · Productos fotográficos
+38,Productos químicos diversos,Químicos y plásticos,38 · Productos químicos diversos
+39,Plásticos,Químicos y plásticos,39 · Plásticos
+40,Caucho,Químicos y plásticos,40 · Caucho
+41,Cueros y pieles,Otros,41 · Cueros y pieles
+42,Manufacturas de cuero,Otros,42 · Manufacturas de cuero
+43,Peletería,Otros,43 · Peletería
+44,Madera,Otros,44 · Madera
+45,Corcho,Otros,45 · Corcho
+46,Cestería,Otros,46 · Cestería
+47,Pasta de celulosa,Otros,47 · Pasta de celulosa
+48,Papel y cartón,Otros,48 · Papel y cartón
+49,Productos editoriales,Otros,49 · Productos editoriales
+50,Seda,Textil y confecciones,50 · Seda
+51,Lana y pelo fino,Textil y confecciones,51 · Lana y pelo fino
+52,Algodón,Textil y confecciones,52 · Algodón
+53,Otras fibras vegetales,Textil y confecciones,53 · Otras fibras vegetales
+54,Filamentos sintéticos,Textil y confecciones,54 · Filamentos sintéticos
+55,Fibras sintéticas discontinuas,Textil y confecciones,55 · Fibras sintéticas discontinuas
+56,"Guata, fieltro y cordelería",Textil y confecciones,"56 · Guata, fieltro y cordelería"
+57,Alfombras,Textil y confecciones,57 · Alfombras
+58,Tejidos especiales,Textil y confecciones,58 · Tejidos especiales
+59,Tejidos recubiertos,Textil y confecciones,59 · Tejidos recubiertos
+60,Tejidos de punto,Textil y confecciones,60 · Tejidos de punto
+61,Prendas de vestir de punto,Textil y confecciones,61 · Prendas de vestir de punto
+62,"Prendas de vestir, excepto de punto",Textil y confecciones,"62 · Prendas de vestir, excepto de punto"
+63,Otros artículos textiles,Textil y confecciones,63 · Otros artículos textiles
+64,Calzado,Textil y confecciones,64 · Calzado
+65,Sombreros,Textil y confecciones,65 · Sombreros
+66,Paraguas y bastones,Otros,66 · Paraguas y bastones
+67,Plumas y flores artificiales,Otros,67 · Plumas y flores artificiales
+68,Manufacturas de piedra y cemento,Otros,68 · Manufacturas de piedra y cemento
+69,Cerámica,Otros,69 · Cerámica
+70,Vidrio,Otros,70 · Vidrio
+71,"Oro, plata y piedras preciosas",Minería y metales,"71 · Oro, plata y piedras preciosas"
+72,Hierro y acero,Metalmecánica y maquinaria,72 · Hierro y acero
+73,Manufacturas de hierro o acero,Metalmecánica y maquinaria,73 · Manufacturas de hierro o acero
+74,Cobre,Minería y metales,74 · Cobre
+75,Níquel,Minería y metales,75 · Níquel
+76,Aluminio,Metalmecánica y maquinaria,76 · Aluminio
+78,Plomo,Minería y metales,78 · Plomo
+79,Zinc,Minería y metales,79 · Zinc
+80,Estaño,Minería y metales,80 · Estaño
+81,Otros metales comunes,Minería y metales,81 · Otros metales comunes
+82,Herramientas,Metalmecánica y maquinaria,82 · Herramientas
+83,Manufacturas diversas de metal,Metalmecánica y maquinaria,83 · Manufacturas diversas de metal
+84,Máquinas y artefactos mecánicos,Metalmecánica y maquinaria,84 · Máquinas y artefactos mecánicos
+85,Máquinas y aparatos eléctricos,Metalmecánica y maquinaria,85 · Máquinas y aparatos eléctricos
+86,Material ferroviario,Metalmecánica y maquinaria,86 · Material ferroviario
+87,Vehículos,Metalmecánica y maquinaria,87 · Vehículos
+88,Aeronaves,Metalmecánica y maquinaria,88 · Aeronaves
+89,Barcos,Metalmecánica y maquinaria,89 · Barcos
+90,Instrumentos de óptica y medida,Metalmecánica y maquinaria,90 · Instrumentos de óptica y medida
+91,Relojería,Otros,91 · Relojería
+92,Instrumentos musicales,Otros,92 · Instrumentos musicales
+93,Armas y municiones,Otros,93 · Armas y municiones
+94,Muebles,Otros,94 · Muebles
+95,Juguetes y deportes,Otros,95 · Juguetes y deportes
+96,Manufacturas diversas,Otros,96 · Manufacturas diversas
+97,Objetos de arte,Otros,97 · Objetos de arte
+99,No clasificado,Otros,99 · No clasificado

@@ -1,0 +1,237 @@
+pais_cod,iso3,iso2,pais,continente
+4,AFG,AF,Afganistán,Asia
+8,ALB,AL,Albania,Europa
+276,DEU,DE,Alemania,Europa
+20,AND,AD,Andorra,Europa
+24,AGO,AO,Angola,África
+660,AIA,AI,Anguila,Latinoamérica
+28,ATG,AG,Antigua y Barbuda,Latinoamérica
+10,ATA,AQ,Antártida,Otros
+682,SAU,SA,Arabia Saudí,Asia
+12,DZA,DZ,Argelia,África
+32,ARG,AR,Argentina,Latinoamérica
+51,ARM,AM,Armenia,Asia
+533,ABW,AW,Aruba,Latinoamérica
+36,AUS,AU,Australia,Oceanía
+40,AUT,AT,Austria,Europa
+31,AZE,AZ,Azerbaiyán,Asia
+44,BHS,BS,Bahamas,Latinoamérica
+50,BGD,BD,Bangladés,Asia
+52,BRB,BB,Barbados,Latinoamérica
+48,BHR,BH,Baréin,Asia
+84,BLZ,BZ,Belice,Latinoamérica
+204,BEN,BJ,Benín,África
+60,BMU,BM,Bermudas,Europa
+112,BLR,BY,Bielorrusia,Europa
+68,BOL,BO,Bolivia,Latinoamérica
+70,BIH,BA,Bosnia y Herzegovina,Europa
+72,BWA,BW,Botsuana,África
+76,BRA,BR,Brasil,Latinoamérica
+96,BRN,BN,Brunéi,Asia
+100,BGR,BG,Bulgaria,Europa
+854,BFA,BF,Burkina Faso,África
+108,BDI,BI,Burundi,África
+64,BTN,BT,Bután,Asia
+56,BEL,BE,Bélgica,Europa
+132,CPV,CV,Cabo Verde,Europa
+116,KHM,KH,Camboya,Asia
+120,CMR,CM,Camerún,África
+124,CAN,CA,Canadá,Norteamérica
+535,BES,BQ,Caribe neerlandés,Latinoamérica
+80,ATB,BQ,Caribe neerlandés,Latinoamérica
+634,QAT,QA,Catar,Asia
+148,TCD,TD,Chad,África
+203,CZE,CZ,Chequia,Europa
+152,CHL,CL,Chile,Latinoamérica
+156,CHN,CN,China,Asia
+196,CYP,CY,Chipre,Asia
+336,VAT,VA,Ciudad del Vaticano,Europa
+170,COL,CO,Colombia,Latinoamérica
+174,COM,KM,Comoras,Asia
+178,COG,CG,Congo,África
+408,PRK,KP,Corea del Norte,Asia
+410,KOR,KR,Corea del Sur,Asia
+188,CRI,CR,Costa Rica,Latinoamérica
+191,HRV,HR,Croacia,Europa
+192,CUB,CU,Cuba,Latinoamérica
+531,CUW,CW,Curazao,Latinoamérica
+384,CIV,CI,Côte d’Ivoire,África
+208,DNK,DK,Dinamarca,Europa
+212,DMA,DM,Dominica,Latinoamérica
+218,ECU,EC,Ecuador,Latinoamérica
+818,EGY,EG,Egipto,África
+222,SLV,SV,El Salvador,Latinoamérica
+784,ARE,AE,Emiratos Árabes Unidos,Asia
+232,ERI,ER,Eritrea,África
+703,SVK,SK,Eslovaquia,Europa
+705,SVN,SI,Eslovenia,Europa
+724,ESP,ES,España,Europa
+842,USA,US,Estados Unidos,Norteamérica
+233,EST,EE,Estonia,Europa
+748,SWZ,SZ,Esuatini,África
+231,ETH,ET,Etiopía,África
+608,PHL,PH,Filipinas,Asia
+246,FIN,FI,Finlandia,Europa
+242,FJI,FJ,Fiyi,Oceanía
+251,FRA,FR,Francia,Europa
+266,GAB,GA,Gabón,África
+270,GMB,GM,Gambia,África
+268,GEO,GE,Georgia,Asia
+288,GHA,GH,Ghana,África
+292,GIB,GI,Gibraltar,Europa
+308,GRD,GD,Granada,Latinoamérica
+300,GRC,GR,Grecia,Europa
+304,GRL,GL,Groenlandia,Latinoamérica
+316,GUM,GU,Guam,Oceanía
+320,GTM,GT,Guatemala,Latinoamérica
+324,GIN,GN,Guinea,África
+226,GNQ,GQ,Guinea Ecuatorial,África
+624,GNB,GW,Guinea-Bisáu,África
+328,GUY,GY,Guyana,Latinoamérica
+332,HTI,HT,Haití,Latinoamérica
+340,HND,HN,Honduras,Latinoamérica
+348,HUN,HU,Hungría,Europa
+699,IND,IN,India,Asia
+360,IDN,ID,Indonesia,Asia
+368,IRQ,IQ,Irak,Asia
+372,IRL,IE,Irlanda,Europa
+364,IRN,IR,Irán,Asia
+74,BVT,BV,Isla Bouvet,Otros
+574,NFK,NF,Isla Norfolk,Oceanía
+162,CXR,CX,Isla de Navidad,Asia
+352,ISL,IS,Islandia,Europa
+136,CYM,KY,Islas Caimán,Latinoamérica
+166,CCK,CC,Islas Cocos,Asia
+184,COK,CK,Islas Cook,Oceanía
+234,FRO,FO,Islas Feroe,Europa
+239,SGS,GS,Islas Georgia del Sur y Sandwich del Sur,Europa
+334,HMD,HM,Islas Heard y McDonald,Otros
+238,FLK,FK,Islas Malvinas,Europa
+580,MNP,MP,Islas Marianas del Norte,Oceanía
+584,MHL,MH,Islas Marshall,Oceanía
+612,PCN,PN,Islas Pitcairn,Oceanía
+90,SLB,SB,Islas Salomón,Oceanía
+796,TCA,TC,Islas Turcas y Caicos,Latinoamérica
+92,VGB,VG,Islas Vírgenes Británicas,Latinoamérica
+581,UMI,UM,Islas menores alejadas de EE. UU.,Oceanía
+376,ISR,IL,Israel,Asia
+380,ITA,IT,Italia,Europa
+388,JAM,JM,Jamaica,Latinoamérica
+392,JPN,JP,Japón,Asia
+400,JOR,JO,Jordania,Asia
+398,KAZ,KZ,Kazajistán,Asia
+404,KEN,KE,Kenia,África
+417,KGZ,KG,Kirguistán,Asia
+296,KIR,KI,Kiribati,Oceanía
+414,KWT,KW,Kuwait,Asia
+418,LAO,LA,Laos,Asia
+426,LSO,LS,Lesoto,África
+428,LVA,LV,Letonia,Europa
+430,LBR,LR,Liberia,África
+434,LBY,LY,Libia,África
+440,LTU,LT,Lituania,Europa
+442,LUX,LU,Luxemburgo,Europa
+422,LBN,LB,Líbano,Asia
+807,MKD,MK,Macedonia del Norte,Europa
+450,MDG,MG,Madagascar,Asia
+458,MYS,MY,Malasia,Asia
+454,MWI,MW,Malaui,África
+462,MDV,MV,Maldivas,Asia
+466,MLI,ML,Mali,África
+470,MLT,MT,Malta,Europa
+504,MAR,MA,Marruecos,África
+480,MUS,MU,Mauricio,Asia
+478,MRT,MR,Mauritania,África
+583,FSM,FM,Micronesia,Oceanía
+498,MDA,MD,Moldavia,Europa
+496,MNG,MN,Mongolia,Asia
+499,MNE,ME,Montenegro,Europa
+500,MSR,MS,Montserrat,Latinoamérica
+508,MOZ,MZ,Mozambique,África
+104,MMR,MM,Myanmar (Birmania),Asia
+484,MEX,MX,México,Norteamérica
+516,NAM,NA,Namibia,África
+520,NRU,NR,Nauru,Oceanía
+524,NPL,NP,Nepal,Asia
+558,NIC,NI,Nicaragua,Latinoamérica
+566,NGA,NG,Nigeria,África
+570,NIU,NU,Niue,Oceanía
+579,NOR,NO,Noruega,Europa
+540,NCL,NC,Nueva Caledonia,Oceanía
+554,NZL,NZ,Nueva Zelanda,Oceanía
+562,NER,NE,Níger,África
+512,OMN,OM,Omán,Asia
+490,S19,,Otros Asia (n.e.p.),Otros
+586,PAK,PK,Pakistán,Asia
+585,PLW,PW,Palaos,Oceanía
+591,PAN,PA,Panamá,Latinoamérica
+598,PNG,PG,Papúa Nueva Guinea,Oceanía
+600,PRY,PY,Paraguay,Latinoamérica
+528,NLD,NL,Países Bajos,Europa
+604,PER,PE,Perú,Latinoamérica
+258,PYF,PF,Polinesia Francesa,Oceanía
+616,POL,PL,Polonia,Europa
+620,PRT,PT,Portugal,Europa
+344,HKG,HK,RAE de Hong Kong (China),Asia
+446,MAC,MO,RAE de Macao (China),Asia
+826,GBR,GB,Reino Unido,Europa
+140,CAF,CF,República Centroafricana,África
+180,COD,CD,República Democrática del Congo,África
+214,DOM,DO,República Dominicana,Latinoamérica
+646,RWA,RW,Ruanda,África
+642,ROU,RO,Rumanía,Europa
+643,RUS,RU,Rusia,Asia
+882,WSM,WS,Samoa,Oceanía
+16,ASM,AS,Samoa Americana,Oceanía
+652,BLM,BL,San Bartolomé,Latinoamérica
+659,KNA,KN,San Cristóbal y Nieves,Latinoamérica
+674,SMR,SM,San Marino,Europa
+666,SPM,PM,San Pedro y Miquelón,Latinoamérica
+670,VCT,VC,San Vicente y las Granadinas,Latinoamérica
+654,SHN,SH,Santa Elena,Europa
+662,LCA,LC,Santa Lucía,Latinoamérica
+678,STP,ST,Santo Tomé y Príncipe,África
+686,SEN,SN,Senegal,África
+688,SRB,RS,Serbia,Europa
+690,SYC,SC,Seychelles,Asia
+694,SLE,SL,Sierra Leona,África
+702,SGP,SG,Singapur,Asia
+534,SXM,SX,Sint Maarten,Latinoamérica
+760,SYR,SY,Siria,Asia
+706,SOM,SO,Somalia,África
+144,LKA,LK,Sri Lanka,Asia
+710,ZAF,ZA,Sudáfrica,África
+729,SDN,SD,Sudán,África
+752,SWE,SE,Suecia,Europa
+757,CHE,CH,Suiza,Europa
+740,SUR,SR,Surinam,Latinoamérica
+732,ESH,EH,Sáhara Occidental,África
+764,THA,TH,Tailandia,Asia
+834,TZA,TZ,Tanzania,África
+762,TJK,TJ,Tayikistán,Asia
+86,IOT,IO,Territorio Británico del Océano Índico,Asia
+260,ATF,TF,Territorios Australes Franceses,Asia
+275,PSE,PS,Territorios Palestinos,Asia
+626,TLS,TL,Timor-Leste,Asia
+768,TGO,TG,Togo,África
+772,TKL,TK,Tokelau,Oceanía
+776,TON,TO,Tonga,Oceanía
+780,TTO,TT,Trinidad y Tobago,Latinoamérica
+795,TKM,TM,Turkmenistán,Asia
+792,TUR,TR,Turquía,Europa
+798,TUV,TV,Tuvalu,Oceanía
+788,TUN,TN,Túnez,África
+804,UKR,UA,Ucrania,Europa
+800,UGA,UG,Uganda,África
+858,URY,UY,Uruguay,Latinoamérica
+860,UZB,UZ,Uzbekistán,Asia
+548,VUT,VU,Vanuatu,Oceanía
+862,VEN,VE,Venezuela,Latinoamérica
+704,VNM,VN,Vietnam,Asia
+876,WLF,WF,Wallis y Futuna,Oceanía
+887,YEM,YE,Yemen,Asia
+262,DJI,DJ,Yibuti,África
+894,ZMB,ZM,Zambia,África
+716,ZWE,ZW,Zimbabue,África
+838,X2 ,,Zonas francas,Otros
+899,_X ,,Zonas no especificadas,Otros
