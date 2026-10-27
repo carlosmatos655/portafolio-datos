@@ -1,0 +1,43 @@
+table dim_pais
+	lineageTag: a23ad3d7-e29a-4523-bf4b-2da7f31b57bf
+
+	column pais_cod
+		dataType: int64
+		lineageTag: 03b89fd3-955f-492f-a1c3-d3974bf01d4b
+		summarizeBy: none
+		sourceColumn: pais_cod
+
+	column iso3
+		dataType: string
+		lineageTag: 7c0a7728-0ee0-409d-947e-227fc369f125
+		summarizeBy: none
+		sourceColumn: iso3
+
+	column iso2
+		dataType: string
+		lineageTag: c10c9811-bf56-479d-bf98-b5765b52ac7d
+		summarizeBy: none
+		sourceColumn: iso2
+
+	column pais
+		dataType: string
+		lineageTag: 979ebebe-ed6b-4b76-8d2a-f3e75ae1dbdf
+		summarizeBy: none
+		sourceColumn: pais
+
+	column continente
+		dataType: string
+		lineageTag: 4afd5be9-b588-4b9b-8377-545fbf59a270
+		summarizeBy: none
+		sourceColumn: continente
+
+	partition dim_pais = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_pais.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"pais_cod", Int64.Type}, {"iso3", type text}, {"iso2", type text}, {"pais", type text}, {"continente", type text}}, "en-US" )
+				in
+				    Tipado
+

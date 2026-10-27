@@ -1,0 +1,40 @@
+table fact_balanza_mensual
+	lineageTag: 64ba24d6-9a3a-439d-bb59-98493e342ae9
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 35b01ccc-3324-4fd1-ae09-b33febe041f8
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column flujo_cod
+		dataType: string
+		lineageTag: 4cbe8247-c5d2-4178-9a73-c45e6d780086
+		summarizeBy: none
+		sourceColumn: flujo_cod
+
+	column grupo
+		dataType: string
+		lineageTag: 907bf85a-22e0-4371-baa3-5f253c59cbf3
+		summarizeBy: none
+		sourceColumn: grupo
+
+	column valor_musd
+		dataType: double
+		lineageTag: b493cd37-4713-46e3-8780-9d105c02f8d6
+		summarizeBy: none
+		sourceColumn: valor_musd
+
+	partition fact_balanza_mensual = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "fact_balanza_mensual.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"fecha", type date}, {"flujo_cod", type text}, {"grupo", type text}, {"valor_musd", type number}}, "en-US" )
+				in
+				    Tipado
+

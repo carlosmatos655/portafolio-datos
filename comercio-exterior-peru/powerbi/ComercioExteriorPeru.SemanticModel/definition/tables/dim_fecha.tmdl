@@ -1,0 +1,61 @@
+table dim_fecha
+	lineageTag: 730e1cc1-8ebc-4d9c-9b3a-d7139503c9a8
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: a95d6563-45d4-40c3-9947-380cdc8337ad
+		summarizeBy: none
+		sourceColumn: fecha
+
+		variation Variation
+			isDefault
+			relationship: 30c2cfa6-e1eb-46e0-be5b-4fb8bdb8cc1b
+			defaultHierarchy: LocalDateTable_40ddee12-acc0-43f4-a3e2-c2fd991052cb.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column anio
+		dataType: int64
+		lineageTag: b2d1ad94-48c0-4166-a5b6-a2b4fd15dbcd
+		summarizeBy: sum
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		lineageTag: cc53e52a-225a-4e29-9fd7-543cb5aa2a06
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_nombre
+		dataType: string
+		lineageTag: 5a6fd96a-168e-462e-a6a3-7dc5f71e7394
+		summarizeBy: none
+		sourceColumn: mes_nombre
+
+	column trimestre
+		dataType: string
+		lineageTag: 5a429674-84e7-46b0-bdd7-65e914900255
+		summarizeBy: none
+		sourceColumn: trimestre
+
+	column anio_mes
+		dataType: string
+		lineageTag: 28a9e22d-d829-4fab-958e-e37fa260210f
+		summarizeBy: none
+		sourceColumn: anio_mes
+
+	partition dim_fecha = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_fecha.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"fecha", type date}, {"anio", Int64.Type}, {"mes", Int64.Type}, {"mes_nombre", type text}, {"trimestre", type text}, {"anio_mes", type text}}, "en-US" )
+				in
+				    Tipado
+

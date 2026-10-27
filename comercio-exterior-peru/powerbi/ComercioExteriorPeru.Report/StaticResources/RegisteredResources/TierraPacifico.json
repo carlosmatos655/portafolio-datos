@@ -1,0 +1,169 @@
+{
+  "name": "Tierra y Pacífico",
+  "dataColors": [
+    "#C2562B",
+    "#00819E",
+    "#B88400",
+    "#9E2A4F",
+    "#5B5FA8",
+    "#4E7A2E",
+    "#5E574E",
+    "#8A8178"
+  ],
+  "foreground": "#1E1B18",
+  "foregroundNeutralSecondary": "#5E574E",
+  "foregroundNeutralTertiary": "#8A8178",
+  "background": "#FBF8F3",
+  "backgroundLight": "#F4EFE7",
+  "backgroundNeutral": "#E3DCD0",
+  "tableAccent": "#C2562B",
+  "good": "#4E7A2E",
+  "neutral": "#B88400",
+  "bad": "#9E2A4F",
+  "textClasses": {
+    "callout": {
+      "fontSize": 28,
+      "fontFace": "DIN",
+      "color": "#1E1B18"
+    },
+    "title": {
+      "fontSize": 12,
+      "fontFace": "Georgia",
+      "color": "#1E1B18"
+    },
+    "header": {
+      "fontSize": 11,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#1E1B18"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#5E574E"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "visualTooltip": [
+          {
+            "show": true
+          }
+        ],
+        "padding": [
+          {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        ],
+        "valueAxis": [
+          {
+            "gridlineColor": {
+              "solid": {
+                "color": "#E3DCD0"
+              }
+            },
+            "gridlineThickness": 1,
+            "fontFamily": "Segoe UI",
+            "labelColor": {
+              "solid": {
+                "color": "#5E574E"
+              }
+            }
+          }
+        ],
+        "categoryAxis": [
+          {
+            "fontFamily": "Segoe UI",
+            "labelColor": {
+              "solid": {
+                "color": "#5E574E"
+              }
+            }
+          }
+        ],
+        "legend": [
+          {
+            "fontFamily": "Segoe UI",
+            "labelColor": {
+              "solid": {
+                "color": "#1E1B18"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "transparency": 100
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F4EFE7"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FBF8F3"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#D6CDBF"
+              }
+            },
+            "radius": 4
+          }
+        ]
+      }
+    }
+  }
+}

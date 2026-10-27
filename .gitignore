@@ -6,3 +6,5 @@ comercio-exterior-peru/data/raw/
 # Power BI: caché local del proyecto
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+# Esquemas PBIR descargados por validate_pbir.py
+**/.schema-cache/

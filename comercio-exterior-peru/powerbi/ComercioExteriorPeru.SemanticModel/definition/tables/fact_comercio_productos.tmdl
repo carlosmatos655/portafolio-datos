@@ -1,0 +1,40 @@
+table fact_comercio_productos
+	lineageTag: 9bd4f24e-26ca-4e43-ae86-127e606e63ad
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: ae7d6878-de90-413d-9173-5c354d2db33d
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column flujo_cod
+		dataType: string
+		lineageTag: f92657f1-d8fa-44a1-90a8-39270cfde3ed
+		summarizeBy: none
+		sourceColumn: flujo_cod
+
+	column capitulo
+		dataType: string
+		lineageTag: c46fdf60-b317-4344-bab1-5f3ed8df955d
+		summarizeBy: none
+		sourceColumn: capitulo
+
+	column valor_usd
+		dataType: double
+		lineageTag: f22e60af-4b3b-45cf-817a-d0caaa68975e
+		summarizeBy: none
+		sourceColumn: valor_usd
+
+	partition fact_comercio_productos = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "fact_comercio_productos.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"fecha", type date}, {"flujo_cod", type text}, {"capitulo", type text}, {"valor_usd", type number}}, "en-US" )
+				in
+				    Tipado
+

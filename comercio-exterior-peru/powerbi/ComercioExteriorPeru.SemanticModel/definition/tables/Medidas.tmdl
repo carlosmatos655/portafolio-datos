@@ -1,0 +1,374 @@
+table Medidas
+	lineageTag: 563350c7-7603-4c39-9f25-463ebcc9489e
+
+	measure 'Anio Balanza' =
+			VAR _completo =
+			    CALCULATE (
+			        MAXX (
+			            FILTER ( VALUES ( dim_fecha[anio] ), CALCULATE ( DISTINCTCOUNT ( fact_balanza_mensual[fecha] ) ) = 12 ),
+			            dim_fecha[anio]
+			        ),
+			        REMOVEFILTERS ( dim_fecha )
+			    )
+			RETURN IF ( HASONEVALUE ( dim_fecha[anio] ), VALUES ( dim_fecha[anio] ), _completo )
+		formatString: 0
+		displayFolder: 0 Contexto
+		lineageTag: eee4aa08-4e66-4cf9-8d1e-ab64fc964fe6
+
+	measure 'Anio Comtrade' =
+			VAR _ultimo = CALCULATE ( YEAR ( MAX ( fact_comercio_socios[fecha] ) ), REMOVEFILTERS () )
+			VAR _sel = SELECTEDVALUE ( dim_fecha[anio] )
+			RETURN IF ( NOT ISBLANK ( _sel ) && _sel <= _ultimo, _sel, _ultimo )
+		formatString: 0
+		displayFolder: 0 Contexto
+		lineageTag: 1d80555d-cfae-43d4-bf47-55aef26e9a9c
+
+	measure 'Balanza mil M' = DIVIDE ( SUM ( fact_balanza_mensual[valor_musd] ), 1000 )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 946c00c3-7223-43ae-a8cb-3399f02bbd6b
+
+	measure 'Exportaciones mil M' = CALCULATE ( [Balanza mil M], dim_flujo[flujo_cod] = "X" )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 7bd36519-e3cd-45a1-ab86-15ede624d702
+
+	measure 'Importaciones mil M' = CALCULATE ( [Balanza mil M], dim_flujo[flujo_cod] = "M" )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: b6294fe2-e781-4732-aba8-130e8deefff7
+
+	measure 'Export anual completo' = IF ( CALCULATE ( DISTINCTCOUNT ( fact_balanza_mensual[fecha] ) ) = 12, [Exportaciones mil M] )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 4bb750fb-b17b-4f37-b585-1b0b62cff3ce
+
+	measure 'Import anual completo' = IF ( CALCULATE ( DISTINCTCOUNT ( fact_balanza_mensual[fecha] ) ) = 12, [Importaciones mil M] )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: d21a9f9a-3de5-47aa-b6f7-d3ae31f0192a
+
+	measure 'Export anio' = VAR _y = [Anio Balanza] RETURN CALCULATE ( [Exportaciones mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: d256f180-1f39-4ac4-9aa5-d6151427424c
+
+	measure 'Import anio' = VAR _y = [Anio Balanza] RETURN CALCULATE ( [Importaciones mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: edc33079-6724-4e27-88dc-5beec6f1febf
+
+	measure 'Export anio anterior' = VAR _y = [Anio Balanza] RETURN CALCULATE ( [Exportaciones mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y - 1 )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 99962801-a425-4efb-9085-e278202c6a0e
+
+	measure 'Import anio anterior' = VAR _y = [Anio Balanza] RETURN CALCULATE ( [Importaciones mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y - 1 )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: de881bfa-b40a-4edd-bca2-ed68578e1f58
+
+	measure 'Superavit anio' = [Export anio] - [Import anio]
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 1d72bb09-01d3-4b90-b78e-9af19822b0c2
+
+	measure '% grupo en el anio' =
+			VAR _y = [Anio Balanza]
+			VAR _v = CALCULATE ( [Balanza mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+			VAR _t = CALCULATE ( [Balanza mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y, REMOVEFILTERS ( fact_balanza_mensual[grupo] ) )
+			RETURN DIVIDE ( _v, _t )
+		formatString: 0.0%
+		displayFolder: 1 Balanza
+		lineageTag: 8d39e950-fb99-4b55-8a2e-ad0bcb5909d1
+
+	measure '% export grupo' = CALCULATE ( [% grupo en el anio], dim_flujo[flujo_cod] = "X" )
+		formatString: 0.0%
+		displayFolder: 1 Balanza
+		lineageTag: 6403bf2d-00e1-4da5-b4e4-efaaadd2b3c5
+
+	measure '% import grupo' = CALCULATE ( [% grupo en el anio], dim_flujo[flujo_cod] = "M" )
+		formatString: 0.0%
+		displayFolder: 1 Balanza
+		lineageTag: cbc5d8b0-cac7-4cff-8c7f-180df3bfcd68
+
+	measure '% Tradicionales' = CALCULATE ( [% export grupo], fact_balanza_mensual[grupo] = "Tradicionales" )
+		formatString: 0.0%
+		displayFolder: 1 Balanza
+		lineageTag: ee222899-f288-44d0-9364-ddab7c204b08
+
+	measure '% No tradicionales' = CALCULATE ( [% export grupo], fact_balanza_mensual[grupo] = "No tradicionales" )
+		formatString: 0.0%
+		displayFolder: 1 Balanza
+		lineageTag: 4d38e48a-c7fe-43a1-803b-a11c0b10d202
+
+	measure 'KPI Export' = [Export anio]
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 1621b57e-6e49-45bd-9ba5-f5731cf40d6c
+
+	measure 'KPI Export nota' = VAR _v = DIVIDE ( [Export anio], [Export anio anterior] ) - 1 RETURN FORMAT ( _v, "+0.0%;-0.0%" ) & "  vs " & ( [Anio Balanza] - 1 ) & " · año " & [Anio Balanza]
+		displayFolder: 1 Balanza
+		lineageTag: 98f35b62-df19-48ba-b7f1-0137e9aca4e1
+
+	measure 'KPI Import' = [Import anio]
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 4ad67a8a-b4f0-4ccc-a315-69d3cb3feef2
+
+	measure 'KPI Import nota' = VAR _v = DIVIDE ( [Import anio], [Import anio anterior] ) - 1 RETURN FORMAT ( _v, "+0.0%;-0.0%" ) & "  vs " & ( [Anio Balanza] - 1 ) & " · año " & [Anio Balanza]
+		displayFolder: 1 Balanza
+		lineageTag: 26b5096f-c36f-4f21-83dc-c0163aa5c3ef
+
+	measure 'KPI Superavit' = [Superavit anio]
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 2c8b7a8e-fa85-4129-9ab2-46ca7a22dc7e
+
+	measure 'KPI Superavit nota' =
+			VAR _y = [Anio Balanza]
+			VAR _max =
+			    MAXX (
+			        FILTER ( ALL ( dim_fecha[anio] ), CALCULATE ( DISTINCTCOUNT ( fact_balanza_mensual[fecha] ) ) = 12 ),
+			        CALCULATE ( [Exportaciones mil M] - [Importaciones mil M] )
+			    )
+			RETURN IF ( [Superavit anio] >= _max, "Récord de la serie 2015–" & _y, "Récord: " & FORMAT ( _max, "#,0.0" ) & " mil M" )
+		displayFolder: 1 Balanza
+		lineageTag: cc8a5944-a139-4470-854c-a81ffd5258a8
+
+	measure 'Ultimo mes' = CALCULATE ( MAX ( fact_balanza_mensual[fecha] ), REMOVEFILTERS () )
+		formatString: yyyy-mm-dd
+		displayFolder: 1 Balanza
+		lineageTag: a4821238-697c-4ebc-a1d9-d29cba4acdc5
+
+	measure 'KPI Export YTD' =
+			VAR _f = [Ultimo mes]
+			RETURN CALCULATE ( [Exportaciones mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = YEAR ( _f ), dim_fecha[mes] <= MONTH ( _f ) )
+		formatString: #,0.0
+		displayFolder: 1 Balanza
+		lineageTag: 53d7b2d6-46b9-44cb-9d5a-dc2cea34674c
+
+	measure 'KPI Export YTD nota' =
+			VAR _f = [Ultimo mes]
+			VAR _ant = CALCULATE ( [Exportaciones mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = YEAR ( _f ) - 1, dim_fecha[mes] <= MONTH ( _f ) )
+			VAR _mes = LOWER ( LOOKUPVALUE ( dim_fecha[mes_nombre], dim_fecha[fecha], _f ) )
+			RETURN FORMAT ( DIVIDE ( [KPI Export YTD], _ant ) - 1, "+0.0%;-0.0%" ) & "  ene–" & _mes & " " & YEAR ( _f ) & " vs " & ( YEAR ( _f ) - 1 )
+		displayFolder: 1 Balanza
+		lineageTag: afb2c656-b3d0-4673-816e-2d4169a89a0a
+
+	measure 'Socios mil M' = DIVIDE ( SUM ( fact_comercio_socios[valor_usd] ), 1e9 )
+		formatString: #,0.0
+		displayFolder: 2 Socios
+		lineageTag: 1ad13d97-0068-441c-8885-f1ba0a471d0f
+
+	measure 'Export socios' = CALCULATE ( [Socios mil M], dim_flujo[flujo_cod] = "X" )
+		formatString: #,0.0
+		displayFolder: 2 Socios
+		lineageTag: 5e53e4c4-f185-476b-be2f-1a6903218637
+
+	measure 'Import socios' = CALCULATE ( [Socios mil M], dim_flujo[flujo_cod] = "M" )
+		formatString: #,0.0
+		displayFolder: 2 Socios
+		lineageTag: 8d71f162-af16-4385-ab97-2c77ea5f0f19
+
+	measure 'Export socios anio' = VAR _y = [Anio Comtrade] RETURN CALCULATE ( [Export socios], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0.0
+		displayFolder: 2 Socios
+		lineageTag: 2b65523c-d60c-4ba7-a9ce-1c067f73f762
+
+	measure 'Import socios anio' = VAR _y = [Anio Comtrade] RETURN CALCULATE ( [Import socios], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0.0
+		displayFolder: 2 Socios
+		lineageTag: dfc097bc-ba9c-40a9-b82e-dab92d021589
+
+	measure '% export pais' = DIVIDE ( [Export socios anio], CALCULATE ( [Export socios anio], REMOVEFILTERS ( dim_pais ) ) )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: 83bff3c7-0a61-4105-8cc6-7288bfc6dd00
+
+	measure '% import pais' = DIVIDE ( [Import socios anio], CALCULATE ( [Import socios anio], REMOVEFILTERS ( dim_pais ) ) )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: 09a72f0e-1e13-4da4-b478-575b9f89a283
+
+	measure 'Export top 10' = IF ( RANKX ( ALLSELECTED ( dim_pais ), [Export socios anio] ) <= 10, [Export socios anio] )
+		formatString: #,0.0
+		displayFolder: 2 Socios
+		lineageTag: 198859dc-815f-4871-8b05-d826412af513
+
+	measure 'Proveedor top 3 %' = IF ( RANKX ( ALL ( dim_pais ), [Import socios anio] ) <= 3, [% import pais] )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: 91deac51-f59d-4a96-83c2-8f896c1b7fc7
+
+	measure '% China por anio' = DIVIDE ( CALCULATE ( [Export socios], dim_pais[pais] = "China" ), CALCULATE ( [Export socios], REMOVEFILTERS ( dim_pais ) ) )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: cbf869ee-414b-44d7-8145-cee3350c0aef
+
+	measure '% EE. UU. por anio' = DIVIDE ( CALCULATE ( [Export socios], dim_pais[pais] = "Estados Unidos" ), CALCULATE ( [Export socios], REMOVEFILTERS ( dim_pais ) ) )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: eff94b21-e558-416d-9d6d-ddf821745939
+
+	measure 'KPI China' = CALCULATE ( [% export pais], dim_pais[pais] = "China" )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: a5528556-150c-449d-8fbf-7fa0f9a99012
+
+	measure 'KPI China nota' =
+			VAR _primero = CALCULATE ( YEAR ( MIN ( fact_comercio_socios[fecha] ) ), REMOVEFILTERS () )
+			VAR _v = CALCULATE ( [% China por anio], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _primero )
+			RETURN "Era " & FORMAT ( _v, "0.0%" ) & " en " & _primero & " · año " & [Anio Comtrade]
+		displayFolder: 2 Socios
+		lineageTag: db9133fc-2501-4edd-94b1-8d2c772382a2
+
+	measure 'KPI Top5' =
+			VAR _t = CALCULATE ( [Export socios anio], REMOVEFILTERS ( dim_pais ) )
+			RETURN DIVIDE ( SUMX ( TOPN ( 5, ALL ( dim_pais ), [Export socios anio] ), [Export socios anio] ), _t )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: 57f11260-3362-4392-b0bb-22d2c2c548d8
+
+	measure 'KPI Top5 nota' = "Top 10: " & FORMAT ( DIVIDE ( SUMX ( TOPN ( 10, ALL ( dim_pais ), [Export socios anio] ), [Export socios anio] ), CALCULATE ( [Export socios anio], REMOVEFILTERS ( dim_pais ) ) ), "0.0%" ) & " del total"
+		displayFolder: 2 Socios
+		lineageTag: 3f1edfd7-c32b-4b81-8bd3-47b0da856d50
+
+	measure '% Top 10' = DIVIDE ( SUMX ( TOPN ( 10, ALL ( dim_pais ), [Export socios anio] ), [Export socios anio] ), CALCULATE ( [Export socios anio], REMOVEFILTERS ( dim_pais ) ) )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: 235032b7-e2de-41c8-8c26-e67f30cb3eba
+
+	measure 'KPI Asia' = CALCULATE ( [% export pais], dim_pais[continente] = "Asia" )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: 321753ab-61bb-4b9c-8d39-66a0e4899671
+
+	measure 'KPI Asia nota' = "Norteamérica " & FORMAT ( CALCULATE ( [% export pais], dim_pais[continente] = "Norteamérica" ), "0.0%" ) & " · Europa " & FORMAT ( CALCULATE ( [% export pais], dim_pais[continente] = "Europa" ), "0.0%" )
+		displayFolder: 2 Socios
+		lineageTag: d92ab3e2-3155-4c96-9daf-f98e91a38ca5
+
+	measure 'KPI HHI' =
+			VAR _y = [Anio Comtrade]
+			VAR _t = CALCULATE ( SUM ( fact_comercio_socios[valor_usd] ), dim_flujo[flujo_cod] = "X", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y, REMOVEFILTERS ( dim_pais ) )
+			RETURN
+			    SUMX (
+			        ALL ( dim_pais[pais_cod] ),
+			        VAR _v = CALCULATE ( SUM ( fact_comercio_socios[valor_usd] ), dim_flujo[flujo_cod] = "X", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+			        RETURN ( 100 * DIVIDE ( _v, _t ) ) ^ 2
+			    )
+		formatString: #,0
+		displayFolder: 2 Socios
+		lineageTag: 2b5b3327-c0ca-4c41-b17e-e0a5a44910e6
+
+	measure 'KPI HHI nota' = VAR _h = [KPI HHI] RETURN "Concentración " & IF ( _h > 2500, "alta", IF ( _h > 1500, "moderada", "baja" ) ) & " · año " & [Anio Comtrade]
+		displayFolder: 2 Socios
+		lineageTag: b8f16447-9959-4591-93ec-68172d7ecb0d
+
+	measure 'China + EE. UU.' = CALCULATE ( [% export pais], dim_pais[pais] IN { "China", "Estados Unidos" } )
+		formatString: 0.0%
+		displayFolder: 2 Socios
+		lineageTag: faaee4e9-4ef7-46d3-9ed7-0343bbfccc32
+
+	measure 'Productos mil M' = DIVIDE ( CALCULATE ( SUM ( fact_comercio_productos[valor_usd] ), dim_flujo[flujo_cod] = "X" ), 1e9 )
+		formatString: #,0.0
+		displayFolder: 3 Productos
+		lineageTag: aa67f6c9-5bb8-4d9d-9a24-48702e153584
+
+	measure 'Export prod anio' = VAR _y = [Anio Comtrade] RETURN CALCULATE ( [Productos mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0.0
+		displayFolder: 3 Productos
+		lineageTag: c9cbec5f-beb4-4f1d-b7b0-00198e906fd1
+
+	measure 'Export prod hace 5' = VAR _y = [Anio Comtrade] RETURN CALCULATE ( [Productos mil M], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y - 5 )
+		formatString: #,0.0
+		displayFolder: 3 Productos
+		lineageTag: 5e876f89-2430-4aaf-8531-a7c8bd798c11
+
+	measure '% export producto' = DIVIDE ( [Export prod anio], CALCULATE ( [Export prod anio], REMOVEFILTERS ( dim_producto ) ) )
+		formatString: 0.0%
+		displayFolder: 3 Productos
+		lineageTag: 65fae2a1-4463-46ae-b18e-8a4814e43bad
+
+	measure 'Crecimiento anual 5a' = VAR _a = [Export prod hace 5] VAR _b = [Export prod anio] RETURN IF ( _a > 0, ( _b / _a ) ^ ( 1 / 5 ) - 1 )
+		formatString: +0.0%;-0.0%
+		displayFolder: 3 Productos
+		lineageTag: 5a5a6cc3-3741-472f-b21d-c077c746a727
+
+	measure 'Crecimiento 5a' = VAR _a = [Export prod hace 5] VAR _b = [Export prod anio] RETURN IF ( _a > 0 && _b >= 0.1, _b / _a - 1 )
+		formatString: +0%;-0%
+		displayFolder: 3 Productos
+		lineageTag: 6d43561a-6d31-4bbd-809b-5a0673b9d603
+
+	measure 'Producto top 8' = IF ( RANKX ( ALLSELECTED ( dim_producto ), [Export prod anio] ) <= 8, [Export prod anio] )
+		formatString: #,0.0
+		displayFolder: 3 Productos
+		lineageTag: 0ca805b9-d0b0-4961-8102-b06f4cf81df8
+
+	measure 'Top crecimiento' =
+			VAR _g = [Crecimiento 5a]
+			RETURN IF ( NOT ISBLANK ( _g ) && RANKX ( FILTER ( ALLSELECTED ( dim_producto ), NOT ISBLANK ( [Crecimiento 5a] ) ), [Crecimiento 5a] ) <= 5, _g )
+		formatString: +0%;-0%
+		displayFolder: 3 Productos
+		lineageTag: bade2bc7-084d-4c9e-a936-e8281d78c39c
+
+	measure 'Hace 5 anios (top)' = IF ( NOT ISBLANK ( [Top crecimiento] ), [Export prod hace 5] )
+		formatString: #,0.00
+		displayFolder: 3 Productos
+		lineageTag: 1c2efcc4-683e-41ec-9f6b-0d3df1cf21d6
+
+	measure 'En el anio (top)' = IF ( NOT ISBLANK ( [Top crecimiento] ), [Export prod anio] )
+		formatString: #,0.00
+		displayFolder: 3 Productos
+		lineageTag: 5136e774-89b0-4d51-ae85-920130e50949
+
+	measure 'KPI Mineria' = CALCULATE ( [% export producto], dim_producto[sector] = "Minería y metales" )
+		formatString: 0.0%
+		displayFolder: 3 Productos
+		lineageTag: ee9db5c6-1cc9-4cf1-aac3-ecaf6e4b28a3
+
+	measure 'KPI Mineria nota' = "US$ " & FORMAT ( CALCULATE ( [Export prod anio], dim_producto[sector] = "Minería y metales" ), "#,0.0" ) & " mil M · año " & [Anio Comtrade]
+		displayFolder: 3 Productos
+		lineageTag: 0255eb1b-b79e-4983-875f-9e937088e9ad
+
+	measure 'KPI Agro' = CALCULATE ( [Export prod anio], dim_producto[sector] = "Agro y alimentos" )
+		formatString: #,0.0
+		displayFolder: 3 Productos
+		lineageTag: c3aebcae-3b7d-4da7-a944-d6fea0b9dff7
+
+	measure 'KPI Agro nota' = FORMAT ( CALCULATE ( [Crecimiento anual 5a], dim_producto[sector] = "Agro y alimentos" ), "+0.0%;-0.0%" ) & " anual en 5 años"
+		displayFolder: 3 Productos
+		lineageTag: 1281af4a-0c97-4a29-ac4a-9b58bc00abe3
+
+	measure 'KPI Cacao' = CALCULATE ( [Export prod anio], dim_producto[capitulo] = "18" ) / CALCULATE ( [Export prod hace 5], dim_producto[capitulo] = "18" ) - 1
+		formatString: +0%;-0%
+		displayFolder: 3 Productos
+		lineageTag: c618bdb4-6dc4-472e-bdea-94c342a5c56c
+
+	measure 'KPI Cacao nota' = "De US$ " & FORMAT ( CALCULATE ( [Export prod hace 5], dim_producto[capitulo] = "18" ), "0.00" ) & " a " & FORMAT ( CALCULATE ( [Export prod anio], dim_producto[capitulo] = "18" ), "0.00" ) & " mil M"
+		displayFolder: 3 Productos
+		lineageTag: e0fc874e-8987-4c9a-90e5-d3bd71f1d24b
+
+	measure 'KPI Frutas' = CALCULATE ( [Export prod anio], dim_producto[capitulo] = "08" )
+		formatString: #,0.0
+		displayFolder: 3 Productos
+		lineageTag: 30e835ef-84bb-474b-8c44-c9ce33b18f65
+
+	measure 'KPI Frutas nota' =
+			VAR _v = CALCULATE ( [Export prod anio], dim_producto[capitulo] = "08" )
+			VAR _r = COUNTROWS ( FILTER ( ALL ( dim_producto ), [Export prod anio] > _v ) ) + 1
+			RETURN "Puesto " & _r & " entre los productos exportados"
+		displayFolder: 3 Productos
+		lineageTag: 3e44e5c6-c54e-4d22-ad94-e349627fc8f7
+
+	column Columna1
+		dataType: int64
+		isHidden
+		lineageTag: 0c8d2e4d-3f2f-43be-bef6-45914d841f5d
+		summarizeBy: none
+		sourceColumn: [Columna1]
+
+	partition Medidas = calculated
+		mode: import
+		source = ROW ( "Columna1", 0 )
+

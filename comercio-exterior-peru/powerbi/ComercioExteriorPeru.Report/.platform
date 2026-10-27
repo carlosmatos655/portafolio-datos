@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ComercioExteriorPeru"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3a9bcf17-73d7-4c3f-9237-f0128b66a3e4"
+  }
+}

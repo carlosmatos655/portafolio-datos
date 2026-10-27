@@ -1,0 +1,37 @@
+table dim_producto
+	lineageTag: 2c0b22a1-ef1e-4e6a-94c7-da22334d3fc9
+
+	column capitulo
+		dataType: string
+		lineageTag: f16a5240-d1c2-4cf9-b8ea-4a6fc5891914
+		summarizeBy: none
+		sourceColumn: capitulo
+
+	column producto
+		dataType: string
+		lineageTag: d8a5990c-f2ca-4cce-b230-14c584e2d7c9
+		summarizeBy: none
+		sourceColumn: producto
+
+	column sector
+		dataType: string
+		lineageTag: e6af2701-4cfb-4c8f-8dc5-f599ae057ddc
+		summarizeBy: none
+		sourceColumn: sector
+
+	column capitulo_producto
+		dataType: string
+		lineageTag: 399585b8-5a2e-450e-b308-8c20e8fd8ffc
+		summarizeBy: none
+		sourceColumn: capitulo_producto
+
+	partition dim_producto = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_producto.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"capitulo", type text}, {"producto", type text}, {"sector", type text}, {"capitulo_producto", type text}}, "en-US" )
+				in
+				    Tipado
+

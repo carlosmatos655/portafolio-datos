@@ -1,0 +1,25 @@
+table dim_flujo
+	lineageTag: 336f0fb6-ed64-4674-b32c-4a971f7a831e
+
+	column flujo_cod
+		dataType: string
+		lineageTag: cb3c5166-26a1-4293-8d58-754b7b34b027
+		summarizeBy: none
+		sourceColumn: flujo_cod
+
+	column flujo
+		dataType: string
+		lineageTag: eff4a444-4526-42a0-9fcd-165efbd1a401
+		summarizeBy: none
+		sourceColumn: flujo
+
+	partition dim_flujo = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_flujo.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"flujo_cod", type text}, {"flujo", type text}}, "en-US" )
+				in
+				    Tipado
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "ComercioExteriorPeru"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "647d1359-64ed-4b8e-a60c-e7e8c2969d8c"
+  }
+}

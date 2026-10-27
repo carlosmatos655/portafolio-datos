@@ -1,0 +1,37 @@
+relationship ca8513cb-4f99-5eaa-ae9d-557883521c68
+	fromColumn: fact_balanza_mensual.fecha
+	toColumn: dim_fecha.fecha
+
+relationship 50b32cee-815b-5bb7-9d44-0c3f55364ae6
+	fromColumn: fact_balanza_mensual.flujo_cod
+	toColumn: dim_flujo.flujo_cod
+
+relationship 86599695-2934-5cb9-854a-06e062653ee4
+	fromColumn: fact_comercio_socios.fecha
+	toColumn: dim_fecha.fecha
+
+relationship d7815ada-bcb6-5718-9cf8-a4c6944c4af9
+	fromColumn: fact_comercio_socios.flujo_cod
+	toColumn: dim_flujo.flujo_cod
+
+relationship 396a936a-89f1-5848-9e93-85e41eedc7fd
+	fromColumn: fact_comercio_socios.pais_cod
+	toColumn: dim_pais.pais_cod
+
+relationship 544cdc08-4866-50c3-bb8c-5e4cff7e3c71
+	fromColumn: fact_comercio_productos.fecha
+	toColumn: dim_fecha.fecha
+
+relationship af889136-e892-5c0d-bedd-619352c951e0
+	fromColumn: fact_comercio_productos.flujo_cod
+	toColumn: dim_flujo.flujo_cod
+
+relationship 67b5d843-8d0f-56fd-a95a-4bd2d5b34c91
+	fromColumn: fact_comercio_productos.capitulo
+	toColumn: dim_producto.capitulo
+
+relationship 30c2cfa6-e1eb-46e0-be5b-4fb8bdb8cc1b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_fecha.fecha
+	toColumn: LocalDateTable_40ddee12-acc0-43f4-a3e2-c2fd991052cb.Date
+

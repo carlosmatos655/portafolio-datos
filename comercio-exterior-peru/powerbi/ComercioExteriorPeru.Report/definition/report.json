@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "customTheme": {
+      "name": "TierraPacifico.json",
+      "reportVersionAtImport": {
+        "visual": "2.14.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "resourcePackages": [
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "bg_balanza.png",
+          "path": "bg_balanza.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_productos.png",
+          "path": "bg_productos.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_socios.png",
+          "path": "bg_socios.png",
+          "type": "Image"
+        },
+        {
+          "name": "TierraPacifico.json",
+          "path": "TierraPacifico.json",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true
+  }
+}
