@@ -30,8 +30,3 @@ relationship 67b5d843-8d0f-56fd-a95a-4bd2d5b34c91
 	fromColumn: fact_comercio_productos.capitulo
 	toColumn: dim_producto.capitulo
 
-relationship 30c2cfa6-e1eb-46e0-be5b-4fb8bdb8cc1b
-	joinOnDateBehavior: datePartOnly
-	fromColumn: dim_fecha.fecha
-	toColumn: LocalDateTable_40ddee12-acc0-43f4-a3e2-c2fd991052cb.Date
-

@@ -3,9 +3,9 @@
   "name": "crecimiento",
   "position": {
     "x": 890,
-    "y": 250,
+    "y": 262,
     "z": 1000,
-    "height": 260,
+    "height": 250,
     "width": 350,
     "tabOrder": 1000
   },
@@ -38,42 +38,12 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Hace 5 anios (top)"
-                }
-              },
-              "queryRef": "Medidas.Hace 5 anios (top)",
-              "nativeQueryRef": "Hace 5 anios (top)",
-              "displayName": "Hace 5 años"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Medidas"
-                    }
-                  },
-                  "Property": "En el anio (top)"
-                }
-              },
-              "queryRef": "Medidas.En el anio (top)",
-              "nativeQueryRef": "En el anio (top)",
-              "displayName": "En el año"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Medidas"
-                    }
-                  },
                   "Property": "Top crecimiento"
                 }
               },
               "queryRef": "Medidas.Top crecimiento",
               "nativeQueryRef": "Top crecimiento",
-              "displayName": "Crecimiento"
+              "displayName": "Crecimiento en 5 años"
             }
           ]
         }

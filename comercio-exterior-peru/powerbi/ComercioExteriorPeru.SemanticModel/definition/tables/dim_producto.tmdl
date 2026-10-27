@@ -1,27 +1,27 @@
 table dim_producto
-	lineageTag: 2c0b22a1-ef1e-4e6a-94c7-da22334d3fc9
+	lineageTag: 8b2cee7e-1545-44c9-8edb-229bc06e1beb
 
 	column capitulo
 		dataType: string
-		lineageTag: f16a5240-d1c2-4cf9-b8ea-4a6fc5891914
+		lineageTag: cb95737f-7c94-4a87-bb0c-0ef9a78b63c1
 		summarizeBy: none
 		sourceColumn: capitulo
 
 	column producto
 		dataType: string
-		lineageTag: d8a5990c-f2ca-4cce-b230-14c584e2d7c9
+		lineageTag: 53045265-24b6-4b75-aa49-1ad6481e3378
 		summarizeBy: none
 		sourceColumn: producto
 
 	column sector
 		dataType: string
-		lineageTag: e6af2701-4cfb-4c8f-8dc5-f599ae057ddc
+		lineageTag: 5344666e-dc7d-4a97-b682-839de9e2730b
 		summarizeBy: none
 		sourceColumn: sector
 
 	column capitulo_producto
 		dataType: string
-		lineageTag: 399585b8-5a2e-450e-b308-8c20e8fd8ffc
+		lineageTag: 206f89b5-c6eb-4bf6-846c-a61c851825da
 		summarizeBy: none
 		sourceColumn: capitulo_producto
 

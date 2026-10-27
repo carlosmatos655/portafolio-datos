@@ -1,10 +1,10 @@
 table fact_comercio_socios
-	lineageTag: 82985cc1-9fb0-463c-a740-91163aa1b9b7
+	lineageTag: 1d046a5c-a0c8-4c4e-8393-03a61e399a63
 
 	column fecha
 		dataType: dateTime
 		formatString: yyyy-mm-dd
-		lineageTag: a6e9a205-4c6c-4372-aaf9-1707821a8043
+		lineageTag: c4b7fe63-63b6-470f-8dba-f9023df2309a
 		summarizeBy: none
 		sourceColumn: fecha
 
@@ -12,19 +12,19 @@ table fact_comercio_socios
 
 	column flujo_cod
 		dataType: string
-		lineageTag: ec34298b-af6f-4ca5-934c-7686d73f9b22
+		lineageTag: bef64477-fb99-4e9f-94b5-89a1ccb0f4db
 		summarizeBy: none
 		sourceColumn: flujo_cod
 
 	column pais_cod
 		dataType: int64
-		lineageTag: ee91fbfd-906e-404f-81fa-56179f8bf106
+		lineageTag: 615ad5aa-910a-4a98-932c-81fec91a4a73
 		summarizeBy: none
 		sourceColumn: pais_cod
 
 	column valor_usd
 		dataType: double
-		lineageTag: 3d9b6681-a67d-4864-b615-d214e57bb418
+		lineageTag: d71f2c3f-9988-4b98-ad24-b29a9b78247a
 		summarizeBy: none
 		sourceColumn: valor_usd
 

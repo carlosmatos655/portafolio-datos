@@ -225,48 +225,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "medidas.hace_5_anios_top": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Medidas",
-			          "ConceptualProperty": "Hace 5 anios (top)"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Hace 5 años": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
-			    },
-			    "medidas.en_el_anio_top": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "Medidas",
-			          "ConceptualProperty": "En el anio (top)"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "En el año": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
-			    },
 			    "medidas.top_crecimiento": {
 			      "Definition": {
 			        "Binding": {
@@ -277,7 +235,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Crecimiento": {
+			          "Crecimiento en 5 años": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

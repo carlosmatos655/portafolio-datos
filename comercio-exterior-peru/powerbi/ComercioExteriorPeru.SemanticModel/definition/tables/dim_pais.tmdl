@@ -1,33 +1,33 @@
 table dim_pais
-	lineageTag: a23ad3d7-e29a-4523-bf4b-2da7f31b57bf
+	lineageTag: b4bd289b-97c1-43d1-ba64-fad52c7b06f8
 
 	column pais_cod
 		dataType: int64
-		lineageTag: 03b89fd3-955f-492f-a1c3-d3974bf01d4b
+		lineageTag: e37a3018-63f4-4708-964e-b9e2aba82661
 		summarizeBy: none
 		sourceColumn: pais_cod
 
 	column iso3
 		dataType: string
-		lineageTag: 7c0a7728-0ee0-409d-947e-227fc369f125
+		lineageTag: 40876a77-f2c4-4f42-8aa8-d42061744f95
 		summarizeBy: none
 		sourceColumn: iso3
 
 	column iso2
 		dataType: string
-		lineageTag: c10c9811-bf56-479d-bf98-b5765b52ac7d
+		lineageTag: 3636b683-53de-48dc-a69f-0e7ddd11928f
 		summarizeBy: none
 		sourceColumn: iso2
 
 	column pais
 		dataType: string
-		lineageTag: 979ebebe-ed6b-4b76-8d2a-f3e75ae1dbdf
+		lineageTag: 4421f3a6-5e55-4541-a938-9948c5f7426a
 		summarizeBy: none
 		sourceColumn: pais
 
 	column continente
 		dataType: string
-		lineageTag: 4afd5be9-b588-4b9b-8377-545fbf59a270
+		lineageTag: d44eab44-2b5e-4d79-b38a-69f382eda84c
 		summarizeBy: none
 		sourceColumn: continente
 

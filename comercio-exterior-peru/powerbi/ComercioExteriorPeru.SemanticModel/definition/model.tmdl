@@ -8,7 +8,7 @@ model Model
 
 annotation PBI_QueryOrder = ["RutaDatos","dim_fecha","dim_flujo","dim_pais","dim_producto","fact_balanza_mensual","fact_comercio_socios","fact_comercio_productos"]
 
-annotation __PBI_TimeIntelligenceEnabled = 1
+annotation __PBI_TimeIntelligenceEnabled = 0
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -20,8 +20,6 @@ ref table fact_balanza_mensual
 ref table fact_comercio_socios
 ref table fact_comercio_productos
 ref table Medidas
-ref table DateTableTemplate_581e9951-6909-4f4b-8256-8bd1116d889c
-ref table LocalDateTable_40ddee12-acc0-43f4-a3e2-c2fd991052cb
 
 ref cultureInfo en-US
 

@@ -1,10 +1,10 @@
 table fact_comercio_productos
-	lineageTag: 9bd4f24e-26ca-4e43-ae86-127e606e63ad
+	lineageTag: 10e80754-eab8-4368-85fc-9a177f15ec0f
 
 	column fecha
 		dataType: dateTime
 		formatString: yyyy-mm-dd
-		lineageTag: ae7d6878-de90-413d-9173-5c354d2db33d
+		lineageTag: ab5d04fa-1404-4b97-a726-0663592ab2b5
 		summarizeBy: none
 		sourceColumn: fecha
 
@@ -12,19 +12,19 @@ table fact_comercio_productos
 
 	column flujo_cod
 		dataType: string
-		lineageTag: f92657f1-d8fa-44a1-90a8-39270cfde3ed
+		lineageTag: dfa8f25b-b559-4841-83fa-b7e87020ab6b
 		summarizeBy: none
 		sourceColumn: flujo_cod
 
 	column capitulo
 		dataType: string
-		lineageTag: c46fdf60-b317-4344-bab1-5f3ed8df955d
+		lineageTag: 26c6b04e-052c-415c-9bd9-52364f0d993f
 		summarizeBy: none
 		sourceColumn: capitulo
 
 	column valor_usd
 		dataType: double
-		lineageTag: f22e60af-4b3b-45cf-817a-d0caaa68975e
+		lineageTag: 6a91bcde-c5b2-43ce-af3a-376f8577dd8f
 		summarizeBy: none
 		sourceColumn: valor_usd
 

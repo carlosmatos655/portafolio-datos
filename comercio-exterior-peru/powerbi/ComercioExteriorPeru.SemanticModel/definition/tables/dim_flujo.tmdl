@@ -1,15 +1,15 @@
 table dim_flujo
-	lineageTag: 336f0fb6-ed64-4674-b32c-4a971f7a831e
+	lineageTag: 827e747f-7d98-48f2-8dbd-8f200af2db8d
 
 	column flujo_cod
 		dataType: string
-		lineageTag: cb3c5166-26a1-4293-8d58-754b7b34b027
+		lineageTag: ad3e8aa1-162d-48f9-9757-4c6e1f6e05a1
 		summarizeBy: none
 		sourceColumn: flujo_cod
 
 	column flujo
 		dataType: string
-		lineageTag: eff4a444-4526-42a0-9fcd-165efbd1a401
+		lineageTag: 086a552b-8bd2-48a9-bbbb-8655adf2f048
 		summarizeBy: none
 		sourceColumn: flujo
 

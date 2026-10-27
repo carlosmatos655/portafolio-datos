@@ -1,5 +1,5 @@
 expression RutaDatos = "C:\Claude\portafolio-datos\comercio-exterior-peru\data\processed\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
-	lineageTag: 474140ea-522f-4b36-83bb-ea685ff3cd08
+	lineageTag: 8148485a-a234-450f-b950-34fff736ad7b
 
 	annotation PBI_ResultType = Text
 

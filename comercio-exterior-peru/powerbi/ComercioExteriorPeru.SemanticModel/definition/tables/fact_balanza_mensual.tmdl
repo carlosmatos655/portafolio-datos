@@ -1,10 +1,10 @@
 table fact_balanza_mensual
-	lineageTag: 64ba24d6-9a3a-439d-bb59-98493e342ae9
+	lineageTag: a50aaa18-cd78-4cca-bfdc-43b05313c1a3
 
 	column fecha
 		dataType: dateTime
 		formatString: yyyy-mm-dd
-		lineageTag: 35b01ccc-3324-4fd1-ae09-b33febe041f8
+		lineageTag: dcca05c2-3c6b-4e92-bd4f-575510955208
 		summarizeBy: none
 		sourceColumn: fecha
 
@@ -12,19 +12,19 @@ table fact_balanza_mensual
 
 	column flujo_cod
 		dataType: string
-		lineageTag: 4cbe8247-c5d2-4178-9a73-c45e6d780086
+		lineageTag: 38f56f5d-1909-4d70-b796-51103c79f931
 		summarizeBy: none
 		sourceColumn: flujo_cod
 
 	column grupo
 		dataType: string
-		lineageTag: 907bf85a-22e0-4371-baa3-5f253c59cbf3
+		lineageTag: a2e76b5b-b4cc-4742-9377-eeabbe98ff87
 		summarizeBy: none
 		sourceColumn: grupo
 
 	column valor_musd
 		dataType: double
-		lineageTag: b493cd37-4713-46e3-8780-9d105c02f8d6
+		lineageTag: e7e444f4-0f87-4712-9ea6-ff4a2f613f6c
 		summarizeBy: none
 		sourceColumn: valor_musd
 

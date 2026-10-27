@@ -97,7 +97,7 @@ PAGES = [
             {"x": X0, "y": MAIN_Y, "w": 608, "h": MAIN_H, "title": "Top 10 destinos de exportación", "sub": "miles de millones US$ · ONU Comtrade"},
             {"x": 724, "y": MAIN_Y, "w": 528, "h": 228, "title": "China gana peso; Estados Unidos lo pierde",
              "sub": "% de las exportaciones peruanas por año",
-             "legend": [("China", "cochinilla"), ("Estados Unidos", "pacifico")]},
+             "legend": [("China", "cochinilla"), ("Estados Unidos", "pacifico")], "legend_dy": 36},
             {"x": 724, "y": 444, "w": 528, "h": 248, "title": "Exportaciones por continente", "sub": "% del total del año"},
         ],
         "extras": "socios",
@@ -230,10 +230,10 @@ RETURN "Era " & FORMAT ( _v, "0.0%" ) & " en " & _primero & " · año " & [Anio 
     ("KPI Top5", """
 VAR _t = CALCULATE ( [Export socios anio], REMOVEFILTERS ( dim_pais ) )
 RETURN DIVIDE ( SUMX ( TOPN ( 5, ALL ( dim_pais ), [Export socios anio] ), [Export socios anio] ), _t )""", "0.0%", "2 Socios"),
-    ("KPI Top5 nota", "\"Top 10: \" & FORMAT ( DIVIDE ( SUMX ( TOPN ( 10, ALL ( dim_pais ), [Export socios anio] ), [Export socios anio] ), CALCULATE ( [Export socios anio], REMOVEFILTERS ( dim_pais ) ) ), \"0.0%\" ) & \" del total\"", "", "2 Socios"),
+    ("KPI Top5 nota", "\"entre \" & COUNTROWS ( FILTER ( ALL ( dim_pais ), [Export socios anio] > 0 ) ) & \" destinos\"", "", "2 Socios"),
     ("% Top 10", "DIVIDE ( SUMX ( TOPN ( 10, ALL ( dim_pais ), [Export socios anio] ), [Export socios anio] ), CALCULATE ( [Export socios anio], REMOVEFILTERS ( dim_pais ) ) )", "0.0%", "2 Socios"),
     ("KPI Asia", "CALCULATE ( [% export pais], dim_pais[continente] = \"Asia\" )", "0.0%", "2 Socios"),
-    ("KPI Asia nota", "\"Norteamérica \" & FORMAT ( CALCULATE ( [% export pais], dim_pais[continente] = \"Norteamérica\" ), \"0.0%\" ) & \" · Europa \" & FORMAT ( CALCULATE ( [% export pais], dim_pais[continente] = \"Europa\" ), \"0.0%\" )", "", "2 Socios"),
+    ("KPI Asia nota", "\"Norteamérica: \" & FORMAT ( CALCULATE ( [% export pais], dim_pais[continente] = \"Norteamérica\" ), \"0.0%\" )", "", "2 Socios"),
     ("KPI HHI", """
 VAR _y = [Anio Comtrade]
 VAR _t = CALCULATE ( SUM ( fact_comercio_socios[valor_usd] ), dim_flujo[flujo_cod] = "X", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y, REMOVEFILTERS ( dim_pais ) )
@@ -269,7 +269,7 @@ RETURN IF ( NOT ISBLANK ( _g ) && RANKX ( FILTER ( ALLSELECTED ( dim_producto ),
     ("KPI Frutas nota", """
 VAR _v = CALCULATE ( [Export prod anio], dim_producto[capitulo] = "08" )
 VAR _r = COUNTROWS ( FILTER ( ALL ( dim_producto ), [Export prod anio] > _v ) ) + 1
-RETURN "Puesto " & _r & " entre los productos exportados\"""", "", "3 Productos"),
+RETURN "Puesto " & _r & " de " & COUNTROWS ( ALL ( dim_producto ) ) & " productos\"""", "", "3 Productos"),
 ]
 
 
@@ -325,7 +325,7 @@ def write_model() -> None:
     (d / "model.tmdl").write_text(
         "model Model\n\tculture: en-US\n\tdefaultPowerBIDataSourceVersion: powerBI_V3\n\tsourceQueryCulture: es-PE\n"
         "\tdataAccessOptions\n\t\tlegacyRedirects\n\t\treturnErrorValuesAsNull\n\n"
-        "annotation PBI_QueryOrder = [\"RutaDatos\"]\n\n" + refs + "\n", encoding="utf-8")
+        "annotation PBI_QueryOrder = [\"RutaDatos\"]\n\nannotation __PBI_TimeIntelligenceEnabled = 0\n\n" + refs + "\n", encoding="utf-8")
     ruta = str(DATA) + "\\"
     (d / "expressions.tmdl").write_text(
         f'expression RutaDatos = "{ruta}" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]\n'
@@ -491,8 +491,8 @@ def visuals_balanza(p) -> tuple[list, list]:
     v.append(card("pct_notrad", 1045, 316, 180, 36, "% No tradicionales", size=22))
     v.append(chart("import_uso", 853, 440, 385, 118, "clusteredBarChart",
                    {"Category": [proj(grupo, "Uso")], "Y": [proj(measure("% import grupo"), "% del año")]},
-                   bar_objects(C["pacifico"]), sort=(measure("% import grupo"), "Descending")))
-    v.append(chart("proveedores", 853, 594, 236, 90, "tableEx",
+                   bar_objects(C["pacifico"], cat_width=42), sort=(measure("% import grupo"), "Descending")))
+    v.append(chart("proveedores", 853, 590, 236, 100, "tableEx",
                    {"Values": [proj(column("dim_pais", "pais"), "Proveedor"), proj(measure("Proveedor top 3 %"), "% importado")]},
                    {"grid": [{"properties": {"gridVertical": lit(False), "gridHorizontal": lit(True), "gridHorizontalColor": color(C["line"]),
                                              "rowPadding": lit(2), "outlineColor": color(C["line"])}}],
@@ -526,7 +526,7 @@ def visuals_socios(p) -> tuple[list, list]:
                    {"dataPoint": series_colors(cont, [("Asia", C["cochinilla"]), ("Norteamérica", C["pacifico"]), ("Europa", C["indigo"]),
                                                       ("Latinoamérica", C["muna"]), ("Oceanía", C["muted"]), ("África", C["muted"]), ("Otros", C["muted"])]),
                     "legend": [{"properties": {"show": lit(True), "position": lit("Bottom"), "fontSize": lit(9)}}],
-                    "labels": [{"properties": {"show": lit(True), "color": color("#FFFFFF"), "fontSize": lit(9)}}],
+                    "labels": [{"properties": {"show": lit(True), "color": color("#FFFFFF"), "fontSize": lit(9), "labelPrecision": lit(1)}}],
                     "valueAxis": [{"properties": {"show": lit(False)}}], "categoryAxis": [{"properties": {"show": lit(False)}}]}))
     inter = [("slc_anio", "china_linea", "NoFilter"), ("slc_continente", "china_linea", "NoFilter")]
     return v, inter
@@ -542,10 +542,9 @@ def visuals_productos(p) -> tuple[list, list]:
     prod = column("dim_producto", "producto")
     v.append(chart("top8", 503, 250, 350, 430, "clusteredBarChart",
                    {"Category": [proj(prod, "Producto")], "Y": [proj(measure("Producto top 8"), "Exportaciones")]},
-                   bar_objects(C["lucuma"], cat_width=45), sort=(measure("Producto top 8"), "Descending")))
-    v.append(chart("crecimiento", 890, 250, 350, 260, "tableEx",
-                   {"Values": [proj(prod, "Producto"), proj(measure("Hace 5 anios (top)"), "Hace 5 años"),
-                               proj(measure("En el anio (top)"), "En el año"), proj(measure("Top crecimiento"), "Crecimiento")]},
+                   bar_objects(C["lucuma"], cat_width=55), sort=(measure("Producto top 8"), "Descending")))
+    v.append(chart("crecimiento", 890, 262, 350, 250, "tableEx",
+                   {"Values": [proj(prod, "Producto"), proj(measure("Top crecimiento"), "Crecimiento en 5 años")]},
                    {"grid": [{"properties": {"gridVertical": lit(False), "gridHorizontal": lit(True), "gridHorizontalColor": color(C["line"]),
                                              "rowPadding": lit(6), "outlineColor": color(C["line"])}}],
                     "columnHeaders": [{"properties": {"fontColor": color(C["ink2"]), "backColor": color(C["card"]), "fontFamily": lit("Segoe UI"), "fontSize": lit(9), "wordWrap": lit(True)}}],
@@ -633,7 +632,7 @@ def background_html(p: dict) -> str:
             lx = c["x"] + c["w"] - 16
             items = "".join(f'<span style="display:inline-flex;align-items:center;gap:6px;margin-left:14px"><span style="width:14px;height:3px;background:{C[k]}"></span>{t}</span>'
                             for t, k in c["legend"])
-            cards += f'<div class="abs" style="right:{W - lx}px;top:{c["y"] + 16}px;font-size:12px">{items}</div>'
+            cards += f'<div class="abs" style="right:{W - lx}px;top:{c["y"] + c.get("legend_dy", 16)}px;font-size:12px">{items}</div>'
     slicer_note = ""
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 html,body{{margin:0;width:{W}px;height:{H}px;overflow:hidden;background:{C["bg"]};color:{C["ink"]};font-family:'Segoe UI',sans-serif}}

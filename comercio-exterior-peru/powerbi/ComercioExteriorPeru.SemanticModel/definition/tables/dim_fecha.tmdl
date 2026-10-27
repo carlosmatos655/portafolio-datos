@@ -1,51 +1,42 @@
 table dim_fecha
-	lineageTag: 730e1cc1-8ebc-4d9c-9b3a-d7139503c9a8
+	lineageTag: dc12670e-ade8-49dc-892b-784d7fc0c232
 
 	column fecha
 		dataType: dateTime
 		formatString: yyyy-mm-dd
-		lineageTag: a95d6563-45d4-40c3-9947-380cdc8337ad
+		lineageTag: f71b049f-721f-434a-9736-f51602893fdb
 		summarizeBy: none
 		sourceColumn: fecha
-
-		variation Variation
-			isDefault
-			relationship: 30c2cfa6-e1eb-46e0-be5b-4fb8bdb8cc1b
-			defaultHierarchy: LocalDateTable_40ddee12-acc0-43f4-a3e2-c2fd991052cb.'Date Hierarchy'
 
 		annotation UnderlyingDateTimeDataType = Date
 
 	column anio
 		dataType: int64
-		lineageTag: b2d1ad94-48c0-4166-a5b6-a2b4fd15dbcd
-		summarizeBy: sum
+		lineageTag: 015a99e3-3e65-4cf9-911d-fb0a1ad3fcf3
+		summarizeBy: none
 		sourceColumn: anio
-
-		annotation SummarizationSetBy = Automatic
 
 	column mes
 		dataType: int64
-		lineageTag: cc53e52a-225a-4e29-9fd7-543cb5aa2a06
-		summarizeBy: sum
+		lineageTag: 52218475-2e00-4d05-a4a4-bc628277599a
+		summarizeBy: none
 		sourceColumn: mes
-
-		annotation SummarizationSetBy = Automatic
 
 	column mes_nombre
 		dataType: string
-		lineageTag: 5a6fd96a-168e-462e-a6a3-7dc5f71e7394
+		lineageTag: 8d7786ae-e62e-4edd-9f47-e97cc30e13f7
 		summarizeBy: none
 		sourceColumn: mes_nombre
 
 	column trimestre
 		dataType: string
-		lineageTag: 5a429674-84e7-46b0-bdd7-65e914900255
+		lineageTag: 3a153c31-ba14-412e-8509-0912bd78b66f
 		summarizeBy: none
 		sourceColumn: trimestre
 
 	column anio_mes
 		dataType: string
-		lineageTag: 28a9e22d-d829-4fab-958e-e37fa260210f
+		lineageTag: af82c0a1-d42d-4768-b340-636a3f977014
 		summarizeBy: none
 		sourceColumn: anio_mes
 

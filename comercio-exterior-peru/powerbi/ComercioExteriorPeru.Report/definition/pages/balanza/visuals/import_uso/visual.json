@@ -181,6 +181,13 @@
                   "Value": "'Segoe UI'"
                 }
               }
+            },
+            "maxMarginFactor": {
+              "expr": {
+                "Literal": {
+                  "Value": "42D"
+                }
+              }
             }
           }
         }
