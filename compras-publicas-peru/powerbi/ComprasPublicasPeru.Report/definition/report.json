@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.0.0/schema.json",
+  "themeCollection": {
+    "customTheme": {
+      "name": "NocheParacas.json",
+      "reportVersionAtImport": {
+        "visual": "2.4.0",
+        "report": "3.0.0",
+        "page": "2.0.0"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "resourcePackages": [
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "NocheParacas.json",
+          "path": "NocheParacas.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "bg_panorama.png",
+          "path": "bg_panorama.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_competencia.png",
+          "path": "bg_competencia.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_proveedores.png",
+          "path": "bg_proveedores.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true
+  }
+}

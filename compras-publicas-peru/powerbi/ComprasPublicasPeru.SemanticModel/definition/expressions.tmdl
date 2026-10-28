@@ -1,0 +1,3 @@
+expression RutaDatos = "C:\Claude\portafolio-datos\compras-publicas-peru\data\processed\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+
+	annotation PBI_ResultType = Text

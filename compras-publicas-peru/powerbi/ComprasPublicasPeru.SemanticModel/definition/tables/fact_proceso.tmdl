@@ -1,0 +1,67 @@
+table fact_proceso
+
+	column ocid
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ocid
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: fecha
+
+	column entidad_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: entidad_id
+
+	column metodo
+		dataType: string
+		summarizeBy: none
+		sourceColumn: metodo
+
+	column categoria_cod
+		dataType: string
+		summarizeBy: none
+		sourceColumn: categoria_cod
+
+	column valor_referencial_pen
+		dataType: double
+		summarizeBy: none
+		sourceColumn: valor_referencial_pen
+
+	column n_participantes
+		dataType: double
+		summarizeBy: none
+		sourceColumn: n_participantes
+
+	column monto_adjudicado_pen
+		dataType: double
+		summarizeBy: none
+		sourceColumn: monto_adjudicado_pen
+
+	column dias_a_buena_pro
+		dataType: double
+		summarizeBy: none
+		sourceColumn: dias_a_buena_pro
+
+	column adjudicado
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: adjudicado
+
+	column monto_atipico
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: monto_atipico
+
+	partition fact_proceso = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "fact_proceso.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"ocid", type text}, {"fecha", type date}, {"entidad_id", type text}, {"metodo", type text}, {"categoria_cod", type text}, {"valor_referencial_pen", type number}, {"n_participantes", type number}, {"monto_adjudicado_pen", type number}, {"dias_a_buena_pro", type number}, {"adjudicado", Int64.Type}, {"monto_atipico", Int64.Type}}, "en-US" )
+				in
+				    Tipado

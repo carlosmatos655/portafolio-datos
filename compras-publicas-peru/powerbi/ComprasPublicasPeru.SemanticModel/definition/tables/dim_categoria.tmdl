@@ -1,0 +1,27 @@
+table dim_categoria
+
+	column categoria_cod
+		dataType: string
+		summarizeBy: none
+		sourceColumn: categoria_cod
+
+	column categoria
+		dataType: string
+		summarizeBy: none
+		sourceColumn: categoria
+		sortByColumn: orden
+
+	column orden = SWITCH ( [categoria_cod], "works", 1, "services", 2, 3 )
+		dataType: int64
+		isHidden
+		summarizeBy: none
+
+	partition dim_categoria = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_categoria.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"categoria_cod", type text}, {"categoria", type text}}, "en-US" )
+				in
+				    Tipado

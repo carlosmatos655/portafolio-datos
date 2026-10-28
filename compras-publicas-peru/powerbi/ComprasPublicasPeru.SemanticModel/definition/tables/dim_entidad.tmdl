@@ -1,0 +1,31 @@
+table dim_entidad
+
+	column entidad_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: entidad_id
+
+	column entidad
+		dataType: string
+		summarizeBy: none
+		sourceColumn: entidad
+
+	column departamento
+		dataType: string
+		summarizeBy: none
+		sourceColumn: departamento
+
+	column nivel_gobierno
+		dataType: string
+		summarizeBy: none
+		sourceColumn: nivel_gobierno
+
+	partition dim_entidad = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_entidad.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"entidad_id", type text}, {"entidad", type text}, {"departamento", type text}, {"nivel_gobierno", type text}}, "en-US" )
+				in
+				    Tipado

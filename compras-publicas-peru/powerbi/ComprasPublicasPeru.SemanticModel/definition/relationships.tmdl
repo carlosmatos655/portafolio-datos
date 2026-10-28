@@ -1,0 +1,23 @@
+relationship c73ce2c6-211d-5cb4-8618-173a9804deba
+	fromColumn: fact_proceso.fecha
+	toColumn: dim_fecha.fecha
+
+relationship 73a8f859-bcb9-5467-bfb7-0971b4f13c62
+	fromColumn: fact_proceso.entidad_id
+	toColumn: dim_entidad.entidad_id
+
+relationship aade1352-9df3-5e1b-8eac-bfc812569ca2
+	fromColumn: fact_proceso.metodo
+	toColumn: dim_metodo.metodo
+
+relationship 191a8385-d64c-5f0d-9eed-758bead5adec
+	fromColumn: fact_proceso.categoria_cod
+	toColumn: dim_categoria.categoria_cod
+
+relationship a54fce26-923d-5ea8-8d12-25b11f29b1d2
+	fromColumn: fact_adjudicacion.ocid
+	toColumn: fact_proceso.ocid
+
+relationship 8ae71d4d-017f-5075-9cda-7ff7331d703f
+	fromColumn: fact_adjudicacion.proveedor_id
+	toColumn: dim_proveedor.proveedor_id

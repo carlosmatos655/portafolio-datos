@@ -94,13 +94,15 @@ def build() -> dict[str, pd.DataFrame]:
     sup["monto_pen"] = sup.monto_pen / sup.n_miembros
     ruc = sup.id.str.replace("PE-RUC-", "", regex=False)
     natural = ruc.str[:2].isin(PERSONA_NATURAL)
+    # Muchos consorcios figuran con el RUC 10 de un miembro: cuenta el nombre, pero el RUC se sigue anonimizando.
     consorcio = ruc.str[:2].isin(("16", "17")) | sup.name.fillna("").str.upper().str.contains("CONSORCIO")
     sup["tipo"] = "Otro (no domiciliado u otro)"
     sup.loc[ruc.str[:2] == "20", "tipo"] = "Empresa"
-    sup.loc[consorcio, "tipo"] = "Consorcio"
     sup.loc[natural, "tipo"] = "Persona natural"
+    sup.loc[consorcio, "tipo"] = "Consorcio"
     sup["proveedor_id"] = sup.id.where(~natural, sup.id.map(anonimo))
-    sup["proveedor"] = sup.name.where(~natural, "Persona natural")
+    # Con RUC de persona natural no se publica el nombre (algunos consorcios llevan el de un miembro).
+    sup["proveedor"] = sup.name.where(~natural, "Persona natural").where(~(natural & consorcio), "Consorcio")
 
     # --- participantes registrados (el campo numberOfTenderers del SEACE cuenta participantes, no ofertas)
     ten = same_version(read_all("tender_tenderers", ["id", "main_ocid"]))
@@ -176,6 +178,8 @@ def checks(t: dict[str, pd.DataFrame]) -> None:
     assert p.fecha.isin(t["dim_fecha"].fecha).all() and a.proveedor_id.isin(t["dim_proveedor"].proveedor_id).all()
     pn = t["dim_proveedor"].query("tipo == 'Persona natural'")
     assert (pn.proveedor == "Persona natural").all() and pn.proveedor_id.str.startswith("PN-").all()
+    anon = t["dim_proveedor"].query("proveedor_id.str.startswith('PN-')", engine="python")
+    assert anon.proveedor.isin(["Persona natural", "Consorcio"]).all(), "nombre publicado con RUC de persona natural"
     # Ningún campo publicado debe contener un RUC de persona natural (10/15/16/17 + 9 dígitos).
     for name, df in t.items():
         for c in df.select_dtypes("object"):

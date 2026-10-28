@@ -1,0 +1,21 @@
+table dim_metodo
+
+	column metodo
+		dataType: string
+		summarizeBy: none
+		sourceColumn: metodo
+
+	column tipo_ocds
+		dataType: string
+		summarizeBy: none
+		sourceColumn: tipo_ocds
+
+	partition dim_metodo = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_metodo.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"metodo", type text}, {"tipo_ocds", type text}}, "en-US" )
+				in
+				    Tipado

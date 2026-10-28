@@ -1,0 +1,32 @@
+table fact_adjudicacion
+
+	column ocid
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ocid
+
+	column proveedor_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: proveedor_id
+
+	column fecha_buena_pro
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: fecha_buena_pro
+
+	column monto_pen
+		dataType: double
+		summarizeBy: none
+		sourceColumn: monto_pen
+
+	partition fact_adjudicacion = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "fact_adjudicacion.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"ocid", type text}, {"proveedor_id", type text}, {"fecha_buena_pro", type date}, {"monto_pen", type number}}, "en-US" )
+				in
+				    Tipado

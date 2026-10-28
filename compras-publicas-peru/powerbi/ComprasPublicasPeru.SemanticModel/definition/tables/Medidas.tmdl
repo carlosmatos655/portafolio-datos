@@ -1,0 +1,386 @@
+table Medidas
+
+	column Columna1
+		dataType: int64
+		isHidden
+		summarizeBy: none
+		sourceColumn: [Columna1]
+
+	measure 'Anio' =
+			VAR _completo =
+			    CALCULATE (
+			        MAXX ( FILTER ( VALUES ( dim_fecha[anio] ), CALCULATE ( DISTINCTCOUNT ( dim_fecha[mes] ) ) = 12 ), dim_fecha[anio] ),
+			        REMOVEFILTERS ()
+			    )
+			RETURN IF ( HASONEVALUE ( sel_anio[Anio] ), VALUES ( sel_anio[Anio] ), _completo )
+		formatString: 0
+		displayFolder: 0 Contexto
+
+	measure 'Fecha corte' = VAR _y = [Anio] RETURN CALCULATE ( MAX ( dim_fecha[fecha] ), REMOVEFILTERS (), dim_fecha[anio] = _y )
+		formatString: yyyy-mm-dd
+		displayFolder: 0 Contexto
+
+	measure 'Anio parcial' = MONTH ( [Fecha corte] ) < 12
+		displayFolder: 0 Contexto
+
+	measure 'Anio anterior txt' = FORMAT ( [Anio] - 1, "0" ) & IF ( [Anio parcial], "*", "" )
+		displayFolder: 0 Contexto
+
+	measure 'Base procesos' = CALCULATE ( COUNTROWS ( fact_proceso ), REMOVEFILTERS () )
+		formatString: #,0
+		displayFolder: 0 Contexto
+
+	measure 'Base adjudicaciones' = CALCULATE ( COUNTROWS ( fact_adjudicacion ), REMOVEFILTERS () )
+		formatString: #,0
+		displayFolder: 0 Contexto
+
+	measure 'Base proveedores' = CALCULATE ( COUNTROWS ( dim_proveedor ), REMOVEFILTERS () )
+		formatString: #,0
+		displayFolder: 0 Contexto
+
+	measure 'Base entidades' = CALCULATE ( COUNTROWS ( dim_entidad ), REMOVEFILTERS () )
+		formatString: #,0
+		displayFolder: 0 Contexto
+
+	measure 'Procesos' = COUNTROWS ( fact_proceso )
+		formatString: #,0
+		displayFolder: 1 Panorama
+
+	measure 'Monto' = DIVIDE ( SUM ( fact_proceso[monto_adjudicado_pen] ), 1e9 )
+		formatString: #,0.0
+		displayFolder: 1 Panorama
+
+	measure 'Procesos anio' = VAR _y = [Anio] RETURN CALCULATE ( [Procesos], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0
+		displayFolder: 1 Panorama
+
+	measure 'Procesos anio ant' = VAR _y = [Anio] VAR _corte = [Fecha corte] RETURN CALCULATE ( [Procesos], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y - 1, dim_fecha[fecha] <= EDATE ( _corte, -12 ) )
+		formatString: #,0
+		displayFolder: 1 Panorama
+
+	measure 'Monto anio' = VAR _y = [Anio] RETURN CALCULATE ( [Monto], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0.0
+		displayFolder: 1 Panorama
+
+	measure 'Monto anio ant' = VAR _y = [Anio] VAR _corte = [Fecha corte] RETURN CALCULATE ( [Monto], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y - 1, dim_fecha[fecha] <= EDATE ( _corte, -12 ) )
+		formatString: #,0.0
+		displayFolder: 1 Panorama
+
+	measure 'Var monto' = IF ( NOT ISBLANK ( [Monto anio ant] ), DIVIDE ( [Monto anio], [Monto anio ant] ) - 1 )
+		formatString: +0.0%;-0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Var procesos' = IF ( NOT ISBLANK ( [Procesos anio ant] ), DIVIDE ( [Procesos anio], [Procesos anio ant] ) - 1 )
+		formatString: +0.0%;-0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Pill monto' = VAR _v = [Var monto] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v < 0, "▼ ", "▲ " ) & FORMAT ( ABS ( _v ), "0.0%" ) & " vs " & [Anio anterior txt] )
+		displayFolder: 1 Panorama
+
+	measure 'Pill procesos' = VAR _v = [Var procesos] RETURN IF ( ISBLANK ( _v ), BLANK (), IF ( _v < 0, "▼ ", "▲ " ) & FORMAT ( ABS ( _v ), "0.0%" ) & " vs " & [Anio anterior txt] )
+		displayFolder: 1 Panorama
+
+	measure 'Color var monto' = IF ( [Var monto] < 0, "#F08BA0", "#7FD19A" )
+		displayFolder: 1 Panorama
+
+	measure 'Color var procesos' = IF ( [Var procesos] < 0, "#F08BA0", "#7FD19A" )
+		displayFolder: 1 Panorama
+
+	measure 'Adjudicados anio' = VAR _y = [Anio] RETURN CALCULATE ( SUM ( fact_proceso[adjudicado] ), REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0
+		displayFolder: 1 Panorama
+
+	measure '% adjudicados' = DIVIDE ( [Adjudicados anio], [Procesos anio] )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure '% adjudicados resto' = 1 - [% adjudicados]
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Pill adjudicados' = FORMAT ( [Adjudicados anio], "#,0" ) & " con buena pro"
+		displayFolder: 1 Panorama
+
+	measure 'Dias buena pro' = VAR _y = [Anio] RETURN CALCULATE ( AVERAGE ( fact_proceso[dias_a_buena_pro] ), REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: 0.0
+		displayFolder: 1 Panorama
+
+	measure 'Dias escala' = MIN ( DIVIDE ( [Dias buena pro], 60 ), 1 )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Dias escala resto' = 1 - [Dias escala]
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Monto comparativo' =
+			VAR _y = [Anio]
+			VAR _a = SELECTEDVALUE ( dim_fecha[anio] )
+			RETURN SWITCH ( _a, _y, [Monto anio], _y - 1, [Monto anio ant] )
+		formatString: #,0.0
+		displayFolder: 1 Panorama
+
+	measure 'Color comparativo' = IF ( SELECTEDVALUE ( dim_fecha[anio] ) = [Anio], "#7C82D4", "#4A4866" )
+		displayFolder: 1 Panorama
+
+	measure 'Procesos mes' = VAR _y = [Anio] RETURN CALCULATE ( [Procesos], dim_fecha[anio] = _y )
+		formatString: #,0
+		displayFolder: 1 Panorama
+
+	measure '% categoria' = DIVIDE ( [Monto anio], CALCULATE ( [Monto anio], REMOVEFILTERS ( dim_categoria ) ) )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Color categoria' = SWITCH ( SELECTEDVALUE ( dim_categoria[categoria] ), "Obras", "#D25F43", "Servicios", "#139AB3", "Bienes", "#BA8620", "#7C82D4" )
+		displayFolder: 1 Panorama
+
+	measure 'Var Obras' = CALCULATE ( [Var monto], dim_categoria[categoria] = "Obras" )
+		formatString: +0.0%;-0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Var Servicios' = CALCULATE ( [Var monto], dim_categoria[categoria] = "Servicios" )
+		formatString: +0.0%;-0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Var Bienes' = CALCULATE ( [Var monto], dim_categoria[categoria] = "Bienes" )
+		formatString: +0.0%;-0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Color var Obras' = IF ( [Var Obras] < 0, "#F08BA0", "#7FD19A" )
+		displayFolder: 1 Panorama
+
+	measure 'Color var Servicios' = IF ( [Var Servicios] < 0, "#F08BA0", "#7FD19A" )
+		displayFolder: 1 Panorama
+
+	measure 'Color var Bienes' = IF ( [Var Bienes] < 0, "#F08BA0", "#7FD19A" )
+		displayFolder: 1 Panorama
+
+	measure '% Obras' = CALCULATE ( [% categoria], dim_categoria[categoria] = "Obras" )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure '% Servicios' = CALCULATE ( [% categoria], dim_categoria[categoria] = "Servicios" )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure '% Bienes' = CALCULATE ( [% categoria], dim_categoria[categoria] = "Bienes" )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Insight categoria' =
+			VAR _t = FILTER ( ADDCOLUMNS ( ALL ( dim_categoria[categoria] ), "v", [Var monto] ), NOT ISBLANK ( [v] ) )
+			VAR _min = MINX ( _t, [v] )
+			VAR _max = MAXX ( _t, [v] )
+			VAR _cmin = MAXX ( FILTER ( _t, [v] = _min ), dim_categoria[categoria] )
+			VAR _cmax = MAXX ( FILTER ( _t, [v] = _max ), dim_categoria[categoria] )
+			RETURN
+			    IF ( ISEMPTY ( _t ), "Primer año de la serie: no hay año anterior para comparar",
+			    IF ( _min < 0,
+			        "Mayor caída: " & _cmin & ", " & FORMAT ( _min, "0.0%" ) & " frente a " & [Anio anterior txt],
+			        "Mayor alza: " & _cmax & ", " & FORMAT ( _max, "+0.0%" ) & " frente a " & [Anio anterior txt] ) )
+		displayFolder: 1 Panorama
+
+	measure '% convocatorias mes' =
+			VAR _anios = CALCULATETABLE ( FILTER ( VALUES ( dim_fecha[anio] ), CALCULATE ( DISTINCTCOUNT ( dim_fecha[mes] ) ) = 12 ), REMOVEFILTERS ( dim_fecha ) )
+			VAR _n = CALCULATE ( [Procesos], REMOVEFILTERS ( dim_fecha[anio] ), TREATAS ( _anios, dim_fecha[anio] ) )
+			VAR _t = CALCULATE ( [Procesos], REMOVEFILTERS ( dim_fecha ), TREATAS ( _anios, dim_fecha[anio] ) )
+			RETURN DIVIDE ( _n, _t )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure 'Color mes' =
+			VAR _r = RANKX ( ALL ( dim_fecha[mes], dim_fecha[mes_nombre] ), [% convocatorias mes] )
+			RETURN IF ( _r = 12, "#D25F43", IF ( _r <= 3, "#7C82D4", "#3E3C63" ) )
+		displayFolder: 1 Panorama
+
+	measure '% nivel' = DIVIDE ( [Monto anio], CALCULATE ( [Monto anio], REMOVEFILTERS ( dim_entidad[nivel_gobierno] ) ) )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure '% Nacional' = CALCULATE ( [% nivel], dim_entidad[nivel_gobierno] = "Gobierno nacional" )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure '% Local' = CALCULATE ( [% nivel], dim_entidad[nivel_gobierno] = "Gobierno local" )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure '% Regional' = CALCULATE ( [% nivel], dim_entidad[nivel_gobierno] = "Gobierno regional" )
+		formatString: 0.0%
+		displayFolder: 1 Panorama
+
+	measure '% un participante' =
+			DIVIDE (
+			    CALCULATE ( COUNTROWS ( fact_proceso ), fact_proceso[n_participantes] = 1 ),
+			    CALCULATE ( COUNTROWS ( fact_proceso ), NOT ISBLANK ( fact_proceso[n_participantes] ) )
+			)
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure '% un participante anio' = VAR _y = [Anio] RETURN CALCULATE ( [% un participante], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure '% un participante resto' = 1 - [% un participante anio]
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure 'Monto directo' = CALCULATE ( [Monto anio], dim_metodo[tipo_ocds] = "Directo" )
+		formatString: #,0.00
+		displayFolder: 2 Competencia
+
+	measure '% directo' = DIVIDE ( [Monto directo], [Monto anio] )
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure '% directo resto' = 1 - [% directo]
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure 'Pill directo' = FORMAT ( [% directo], "0.0%" ) & " del monto"
+		displayFolder: 2 Competencia
+
+	measure '% directas un participante' = CALCULATE ( [% un participante anio], dim_metodo[tipo_ocds] = "Directo" )
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure '% directas un participante resto' = 1 - [% directas un participante]
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure 'Pill directas' = "de " & FORMAT ( CALCULATE ( [Procesos anio], dim_metodo[tipo_ocds] = "Directo" ), "#,0" ) & " directas"
+		displayFolder: 2 Competencia
+
+	measure 'Participantes abiertos' = VAR _y = [Anio] RETURN CALCULATE ( CALCULATE ( AVERAGE ( fact_proceso[n_participantes] ), dim_metodo[tipo_ocds] = "Abierto" ), REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: 0.0
+		displayFolder: 2 Competencia
+
+	measure 'Participantes directos' = VAR _y = [Anio] RETURN CALCULATE ( CALCULATE ( AVERAGE ( fact_proceso[n_participantes] ), dim_metodo[tipo_ocds] = "Directo" ), REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: 0.0
+		displayFolder: 2 Competencia
+
+	measure 'Participantes escala' = MIN ( DIVIDE ( [Participantes abiertos], 20 ), 1 )
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure 'Participantes escala resto' = 1 - [Participantes escala]
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure 'Ratio participantes' = "Un proceso abierto reúne " & FORMAT ( DIVIDE ( [Participantes abiertos], [Participantes directos] ), "0" ) & " veces más participantes que uno directo"
+		displayFolder: 2 Competencia
+
+	measure '% un participante metodo' = IF ( [Procesos anio] >= 500, [% un participante anio] )
+		formatString: 0.0%
+		displayFolder: 2 Competencia
+
+	measure 'Color metodo' = IF ( [% un participante metodo] >= 0.5, "#D25F43", "#7C82D4" )
+		displayFolder: 2 Competencia
+
+	measure 'Directo M' = [Monto directo] * 1000
+		formatString: #,0.0
+		displayFolder: 2 Competencia
+
+	measure 'Procesos directos' = IF ( [Monto directo] > 0, CALCULATE ( [Procesos anio], dim_metodo[tipo_ocds] = "Directo" ) )
+		formatString: #,0
+		displayFolder: 2 Competencia
+
+	measure 'Adjudicado' = DIVIDE ( SUM ( fact_adjudicacion[monto_pen] ), 1e9 )
+		formatString: #,0.00
+		displayFolder: 3 Proveedores
+
+	measure 'Adjudicado anio' = VAR _y = [Anio] RETURN CALCULATE ( [Adjudicado], REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0.00
+		displayFolder: 3 Proveedores
+
+	measure '% tipo ganador' = DIVIDE ( [Adjudicado anio], CALCULATE ( [Adjudicado anio], REMOVEFILTERS ( dim_proveedor ) ) )
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure '% Consorcio' = CALCULATE ( [% tipo ganador], dim_proveedor[tipo] = "Consorcio" )
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure '% Empresa' = CALCULATE ( [% tipo ganador], dim_proveedor[tipo] = "Empresa" )
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure '% Persona natural' = CALCULATE ( [% tipo ganador], dim_proveedor[tipo] = "Persona natural" )
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure '% Otro' = CALCULATE ( [% tipo ganador], dim_proveedor[tipo] = "Otro (no domiciliado u otro)" )
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure 'Promedio Consorcio' = VAR _v = VAR _y = [Anio] RETURN CALCULATE ( DIVIDE ( SUM ( fact_adjudicacion[monto_pen] ), COUNTROWS ( fact_adjudicacion ) ), dim_proveedor[tipo] = "Consorcio", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y ) RETURN "S/ " & FORMAT ( _v / 1e6, "0.00" ) & " M prom."
+		displayFolder: 3 Proveedores
+
+	measure 'Promedio Empresa' = VAR _v = VAR _y = [Anio] RETURN CALCULATE ( DIVIDE ( SUM ( fact_adjudicacion[monto_pen] ), COUNTROWS ( fact_adjudicacion ) ), dim_proveedor[tipo] = "Empresa", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y ) RETURN "S/ " & FORMAT ( _v / 1e6, "0.00" ) & " M prom."
+		displayFolder: 3 Proveedores
+
+	measure 'Promedio Persona natural' = VAR _v = VAR _y = [Anio] RETURN CALCULATE ( DIVIDE ( SUM ( fact_adjudicacion[monto_pen] ), COUNTROWS ( fact_adjudicacion ) ), dim_proveedor[tipo] = "Persona natural", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y ) RETURN "S/ " & FORMAT ( _v / 1e6, "0.00" ) & " M prom."
+		displayFolder: 3 Proveedores
+
+	measure 'Promedio Otro' = VAR _v = VAR _y = [Anio] RETURN CALCULATE ( DIVIDE ( SUM ( fact_adjudicacion[monto_pen] ), COUNTROWS ( fact_adjudicacion ) ), dim_proveedor[tipo] = "Otro (no domiciliado u otro)", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y ) RETURN "S/ " & FORMAT ( _v / 1e6, "0.00" ) & " M prom."
+		displayFolder: 3 Proveedores
+
+	measure '% Consorcio resto' = 1 - [% Consorcio]
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure 'Pill consorcio' = FORMAT ( CALCULATE ( DIVIDE ( CALCULATE ( [Adjudicado anio], dim_categoria[categoria] = "Obras" ), [Adjudicado anio] ), dim_proveedor[tipo] = "Consorcio" ), "0%" ) & " en obras"
+		displayFolder: 3 Proveedores
+
+	measure 'Ganadores' = VAR _y = [Anio] RETURN CALCULATE ( DISTINCTCOUNT ( fact_adjudicacion[proveedor_id] ), REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+		formatString: #,0
+		displayFolder: 3 Proveedores
+
+	measure 'Pill ganadores' = "año " & [Anio] & IF ( [Anio parcial], "*", "" )
+		displayFolder: 3 Proveedores
+
+	measure 'Empresa M' = CALCULATE ( [Adjudicado anio], dim_proveedor[tipo] = "Empresa" ) * 1000
+		formatString: #,0.0
+		displayFolder: 3 Proveedores
+
+	measure '% Top 10 empresas' =
+			VAR _y = [Anio]
+			VAR _t = CALCULATE ( [Adjudicado anio], REMOVEFILTERS ( dim_proveedor ) )
+			VAR _emp = CALCULATETABLE ( VALUES ( fact_adjudicacion[proveedor_id] ), dim_proveedor[tipo] = "Empresa", REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+			RETURN DIVIDE ( SUMX ( TOPN ( 10, _emp, [Adjudicado anio] ), [Adjudicado anio] ), _t )
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure '% Top 10 empresas resto' = 1 - [% Top 10 empresas]
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure 'HHI proveedores' =
+			VAR _y = [Anio]
+			VAR _t = CALCULATE ( [Adjudicado anio], REMOVEFILTERS ( dim_proveedor ) )
+			VAR _p = CALCULATETABLE ( VALUES ( fact_adjudicacion[proveedor_id] ), REMOVEFILTERS ( dim_fecha ), dim_fecha[anio] = _y )
+			RETURN SUMX ( _p, ( 100 * DIVIDE ( [Adjudicado anio], _t ) ) ^ 2 )
+		formatString: #,0.0
+		displayFolder: 3 Proveedores
+
+	measure 'Pill HHI' = "HHI " & FORMAT ( [HHI proveedores], "#,0.0" )
+		displayFolder: 3 Proveedores
+
+	measure '% Lima' = DIVIDE ( CALCULATE ( [Monto anio], dim_entidad[departamento] = "Lima" ), CALCULATE ( [Monto anio], REMOVEFILTERS ( dim_entidad[departamento] ) ) )
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure '% Lima resto' = 1 - [% Lima]
+		formatString: 0.0%
+		displayFolder: 3 Proveedores
+
+	measure 'Departamento top 10' = IF ( RANKX ( ALLSELECTED ( dim_entidad[departamento] ), [Monto anio] ) <= 10, [Monto anio] )
+		formatString: #,0.00
+		displayFolder: 3 Proveedores
+
+	measure 'Color departamento' = IF ( RANKX ( ALLSELECTED ( dim_entidad[departamento] ), [Monto anio] ) = 1, "#D25F43", "#7C3F37" )
+		displayFolder: 3 Proveedores
+
+	partition Medidas = calculated
+		mode: import
+		source = ROW ( "Columna1", 0 )

@@ -1,0 +1,38 @@
+table dim_fecha
+
+	column fecha
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: fecha
+
+	column anio
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: anio
+
+	column mes
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: mes
+
+	column mes_nombre
+		dataType: string
+		summarizeBy: none
+		sourceColumn: mes_nombre
+		sortByColumn: mes
+
+	column trimestre
+		dataType: string
+		summarizeBy: none
+		sourceColumn: trimestre
+
+	partition dim_fecha = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_fecha.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"fecha", type date}, {"anio", Int64.Type}, {"mes", Int64.Type}, {"mes_nombre", type text}, {"trimestre", type text}}, "en-US" )
+				in
+				    Tipado

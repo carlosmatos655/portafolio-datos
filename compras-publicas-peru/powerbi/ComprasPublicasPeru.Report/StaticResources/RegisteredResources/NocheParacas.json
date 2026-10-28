@@ -1,0 +1,158 @@
+{
+  "name": "Noche Paracas",
+  "dataColors": [
+    "#7C82D4",
+    "#BA8620",
+    "#139AB3",
+    "#D25F43",
+    "#A9A6BF",
+    "#74718F",
+    "#7FD19A",
+    "#F08BA0"
+  ],
+  "foreground": "#ECEAF4",
+  "foregroundNeutralSecondary": "#A9A6BF",
+  "foregroundNeutralTertiary": "#74718F",
+  "background": "#1B1A29",
+  "backgroundLight": "#16152A",
+  "backgroundNeutral": "#2C2A42",
+  "tableAccent": "#7C82D4",
+  "good": "#7FD19A",
+  "neutral": "#BA8620",
+  "bad": "#F08BA0",
+  "textClasses": {
+    "callout": {
+      "fontSize": 28,
+      "fontFace": "Bahnschrift",
+      "color": "#ECEAF4"
+    },
+    "title": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI",
+      "color": "#ECEAF4"
+    },
+    "header": {
+      "fontSize": 11,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#ECEAF4"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#A9A6BF"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "visualTooltip": [
+          {
+            "show": true,
+            "background": {
+              "solid": {
+                "color": "#16152A"
+              }
+            },
+            "titleFontColor": {
+              "solid": {
+                "color": "#A9A6BF"
+              }
+            },
+            "valueFontColor": {
+              "solid": {
+                "color": "#ECEAF4"
+              }
+            }
+          }
+        ],
+        "padding": [
+          {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        ],
+        "valueAxis": [
+          {
+            "gridlineColor": {
+              "solid": {
+                "color": "#2C2A42"
+              }
+            },
+            "gridlineThickness": 1,
+            "fontFamily": "Segoe UI",
+            "labelColor": {
+              "solid": {
+                "color": "#A9A6BF"
+              }
+            }
+          }
+        ],
+        "categoryAxis": [
+          {
+            "fontFamily": "Segoe UI",
+            "labelColor": {
+              "solid": {
+                "color": "#A9A6BF"
+              }
+            }
+          }
+        ],
+        "legend": [
+          {
+            "fontFamily": "Segoe UI",
+            "labelColor": {
+              "solid": {
+                "color": "#ECEAF4"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "transparency": 100
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#13121D"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

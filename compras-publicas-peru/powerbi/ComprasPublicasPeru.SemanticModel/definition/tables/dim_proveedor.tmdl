@@ -1,0 +1,26 @@
+table dim_proveedor
+
+	column proveedor_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: proveedor_id
+
+	column proveedor
+		dataType: string
+		summarizeBy: none
+		sourceColumn: proveedor
+
+	column tipo
+		dataType: string
+		summarizeBy: none
+		sourceColumn: tipo
+
+	partition dim_proveedor = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document ( File.Contents ( RutaDatos & "dim_proveedor.csv" ), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv] ),
+				    Encabezados = Table.PromoteHeaders ( Origen, [PromoteAllScalars = true] ),
+				    Tipado = Table.TransformColumnTypes ( Encabezados, {{"proveedor_id", type text}, {"proveedor", type text}, {"tipo", type text}}, "en-US" )
+				in
+				    Tipado

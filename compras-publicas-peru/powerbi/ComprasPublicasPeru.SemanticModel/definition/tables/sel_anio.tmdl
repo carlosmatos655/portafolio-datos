@@ -1,0 +1,28 @@
+table sel_anio
+
+	column Anio
+		dataType: int64
+		isNameInferred
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: [Anio]
+
+	column Etiqueta
+		dataType: string
+		isNameInferred
+		summarizeBy: none
+		sourceColumn: [Etiqueta]
+		sortByColumn: Anio
+
+	partition sel_anio = calculated
+		mode: import
+		source =
+				VAR _anios = SELECTCOLUMNS ( DISTINCT ( dim_fecha[anio] ), "Anio", dim_fecha[anio] )
+				RETURN
+				    ADDCOLUMNS (
+				        _anios,
+				        "Etiqueta",
+				            VAR _a = [Anio]
+				            VAR _m = CALCULATE ( MAX ( dim_fecha[mes] ), REMOVEFILTERS (), dim_fecha[anio] = _a )
+				            RETURN FORMAT ( _a, "0" ) & IF ( _m < 12, "*", "" )
+				    )
