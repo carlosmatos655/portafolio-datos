@@ -1,6 +1,6 @@
-# Compras públicas del Perú, 2024–2026
+# Compras públicas del Perú, 2024-2026
 
-Tablero de Power BI sobre **cuánto compra el Estado peruano, cuánta competencia hay en sus procesos y a quién le compra**. Usa los datos abiertos del SEACE en el estándar internacional OCDS: 217 mil procesos y 176 mil adjudicaciones. Va de punta a punta: ETL en Python, modelo estrella, análisis en SQL, 91 medidas DAX y un diseño propio en modo oscuro.
+Tablero de Power BI sobre **cuánto compra el Estado peruano, cuánta competencia hay en sus procesos y a quién le compra**. Usa los datos abiertos del SEACE en el estándar internacional OCDS: 217 mil procesos y 176 mil adjudicaciones. Lo armé completo: ETL en Python, modelo estrella, análisis en SQL, 91 medidas DAX y un diseño propio en modo oscuro.
 
 ![Recorrido por el tablero](docs/img/recorrido.gif)
 
@@ -72,7 +72,7 @@ Este caso usa un modo oscuro inspirado en los mantos de Paracas, que tienen figu
 | Turquesa | `#139AB3` | servicios, empresas |
 | Oro | `#BA8620` | bienes, acento de la navegación |
 
-La paleta se validó para protanopia, deuteranopia y tritanopia, y para contraste sobre el fondo oscuro. La barra lateral lleva una chakana (la cruz andina) y una greca escalonada. Los títulos cuentan el hallazgo, no el nombre del gráfico.
+La paleta se validó para protanopia, deuteranopia y tritanopia, y para contraste sobre el fondo oscuro. La barra lateral lleva una chakana (la cruz andina) y una greca escalonada. Cada título dice lo que muestra el gráfico en vez de solo nombrarlo.
 
 ### Privacidad
 
@@ -110,7 +110,7 @@ compras-publicas-peru/
 <details>
 <summary>English summary</summary>
 
-Power BI dashboard on Peru's public procurement (2024–2026), built from SEACE open data in the Open Contracting Data Standard (217k tenders, 176k awards). It includes:
+Power BI dashboard on Peru's public procurement (2024-2026), built from SEACE open data in the Open Contracting Data Standard (217k tenders, 176k awards). It includes:
 
 - a Python ETL that keeps the latest version of each tender, converts currencies and splits consortium awards;
 - a star schema with SQL analysis;

@@ -1,12 +1,12 @@
-# Comercio exterior del Perú, 2015–2026
+# Comercio exterior del Perú, 2015-2026
 
-Tablero de Power BI que responde tres preguntas con datos oficiales: **cuánto exporta e importa el Perú, a quién le vende y qué vende**. Va de punta a punta: extracción desde APIs públicas con Python, modelo estrella, análisis en SQL, 65 medidas DAX y un diseño propio.
+Tablero de Power BI que responde tres preguntas con datos oficiales: **cuánto exporta e importa el Perú, a quién le vende y qué vende**. Lo armé completo, desde la extracción hasta el diseño: APIs públicas leídas con Python, modelo estrella, análisis en SQL, 65 medidas DAX y un diseño propio.
 
 ![Recorrido por el tablero](docs/img/recorrido.gif)
 
 ## Hallazgos
 
-- **Récord de exportaciones en 2025:** US$ 94.0 mil millones FOB, **+23.1%** frente a 2024. El superávit comercial llegó a US$ 35.4 mil millones, el más alto de la serie 2015–2025.
+- **Récord de exportaciones en 2025:** US$ 94.0 mil millones FOB, **+23.1%** frente a 2024. El superávit comercial llegó a US$ 35.4 mil millones, el más alto de la serie 2015-2025.
 - **El año sigue acelerando:** de enero a agosto de 2026 se exportaron US$ 77.4 mil millones, **+37.1%** frente al mismo periodo de 2025.
 - **China compra uno de cada tres dólares** que exporta el Perú: 33.5% en 2024, frente a 20.0% en 2015. Estados Unidos bajó de 16.3% a 12.9%.
 - **Asia recibe el 51.7%** de las exportaciones. Aun así, la concentración por destino es baja: índice Herfindahl-Hirschman de 1,453 sobre 10,000.
@@ -69,7 +69,7 @@ La paleta sale de lo que el Perú exporta y de sus tintes:
 
 El fondo es color hueso. La paleta se validó para protanopia, deuteranopia y tritanopia, y para contraste sobre el fondo. La barra lateral lleva un sol inca y un motivo inspirado en los tocapus andinos. Las reglas del diseño:
 
-- Los títulos cuentan el hallazgo, no el nombre del gráfico.
+- Cada título dice lo que muestra el gráfico (por ejemplo, el hallazgo del año) en vez de solo nombrarlo.
 - Cada color tiene un solo significado en todas las páginas.
 - Un solo eje por gráfico.
 - La fuente va al pie de cada página.
@@ -102,7 +102,7 @@ comercio-exterior-peru/
 <details>
 <summary>English summary</summary>
 
-Power BI dashboard on Peru's foreign trade (2015–2026) built end to end from official open data: Python ETL from the Central Reserve Bank of Peru (BCRP) and UN Comtrade APIs, a star schema, SQL analysis with window functions, a TMDL semantic model with 65 DAX measures, and a custom "Earth & Pacific" visual identity validated for color-vision deficiency. Key findings:
+Power BI dashboard on Peru's foreign trade (2015-2026), built from official open data: Python ETL from the Central Reserve Bank of Peru (BCRP) and UN Comtrade APIs, a star schema, SQL analysis with window functions, a TMDL semantic model with 65 DAX measures, and a custom "Earth & Pacific" visual identity validated for color-vision deficiency. Key findings:
 
 - Record exports of US$ 94.0 bn in 2025 (+23.1%).
 - China takes 33.5% of exports, up from 20.0% in 2015.
