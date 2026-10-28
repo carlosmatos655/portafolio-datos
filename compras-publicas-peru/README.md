@@ -105,7 +105,7 @@ compras-publicas-peru/
 
 ---
 
-**Carlos Matos Gavino**, Data Analyst · Lima, Perú · [LinkedIn](https://www.linkedin.com/in/carlos-matos-gavino-6a5523203)
+**Carlos Matos Gavino**, Data Analyst · Lima, Perú · [LinkedIn](https://www.linkedin.com/in/carlos-matos-gavino)
 
 <details>
 <summary>English summary</summary>

@@ -24,4 +24,4 @@ Cuánto compra el Estado, cuánta competencia hay en sus procesos y a quién le 
 
 ---
 
-[LinkedIn](https://www.linkedin.com/in/carlos-matos-gavino-6a5523203)
+[LinkedIn](https://www.linkedin.com/in/carlos-matos-gavino)
